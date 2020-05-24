@@ -1,11 +1,8 @@
-from django.shortcuts import render
 from .serializers import MbrCommonSerializers, MbrIncSerializers
 from .models import MbrCommon, MbrInc
-from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets, filters
 from rest_framework.mixins import ListModelMixin
-from rest_framework.decorators import action
 from utils.drf import FormatResponse
 
 

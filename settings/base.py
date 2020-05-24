@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'membership',
     'financial',
     'record',
+    'certification',
 
 
     'django.contrib.admin',
