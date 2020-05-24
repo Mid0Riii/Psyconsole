@@ -6,13 +6,8 @@ class MbrInc(MbrBase):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.inc_name
+        return self.mbse_name
 
-    inc_name = models.CharField(verbose_name='单位全称',
-                                max_length=128,
-                                null=True,
-                                blank=True
-                                )
     inc_loc = models.CharField(verbose_name='所在地区及办公地址',
                                 max_length=128,
                                 null=True,

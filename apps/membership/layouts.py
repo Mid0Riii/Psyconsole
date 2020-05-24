@@ -9,7 +9,7 @@ MbrLayout = \
                      'mbse_status',
                      ),
             Fieldset(_('个人信息'),
-                     Row('mbr_name','mbr_gender','mbr_birth'),
+                     Row('mbse_name','mbr_gender','mbr_birth'),
                      Row('mbr_political','mbr_folk','mbr_title'),
                      Row('mbr_id_num',),
                      Row('mbr_graduate','mbr_graduate_time'),

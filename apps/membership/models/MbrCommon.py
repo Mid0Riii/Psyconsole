@@ -8,15 +8,8 @@ class MbrCommon(MbrBase):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        if self.mbr_name != None:
-            return self.mbr_name
+        return self.mbse_name
 
-    mbr_name = models.CharField(verbose_name='姓名',
-                                max_length=128,
-                                null=True,
-                                blank=True,
-                                default='空'
-                                )
     mbr_gender = models.CharField(verbose_name='性别',
                                   max_length=128,
                                   null=True,

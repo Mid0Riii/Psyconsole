@@ -19,10 +19,10 @@ class MbrUnactivedAdmin(object):
     """
 
     list_display = [
-        'mbse_user', 'mbse_type', 'mbse_status',
+        'mbse_user', 'mbse_identity','mbse_status',
     ]
-    list_filter = list_display
-    list_editable = list_display
+    list_filter = ['mbse_user','mbse_user__identity','mbse_status']
+    # list_editable = list_display
     model_icon="fa fa-user-o"
     show_bookmarks = False
 
@@ -32,7 +32,7 @@ class MbrUnactivedAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_type='0')
+        qs = qs.filter(mbse_user__identity='0')
         return qs
 
 
@@ -43,16 +43,16 @@ class CommonFormalAdmin(object):
     """
 
     list_display = [
-        'mbr_name', 'mbse_type', 'mbse_status', 'mbse_code', 'mbse_exp',
+        'mbse_name', 'mbse_identity', 'mbse_status', 'mbse_code', 'mbse_exp',
     ]
     list_filter = [
-        'mbse_code', 'mbse_exp', 'mbr_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
+        'mbse_code', 'mbse_exp', 'mbse_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
         'mbr_title', 'mbr_id_num', 'mbr_graduate', 'mbr_graduate_time', 'mbr_training_ins', 'mbr_training_date',
         'mbr_job', 'mbr_loc', 'mbr_zip', 'mbr_phone', 'mbr_email', 'mbr_cert', 'mbr_cert_date', 'mbr_cert_code',
     ]
     list_editable = list_display
     readonly_fields = [
-        'mbse_user','mbr_name', 'mbse_type', 'mbse_status', 'mbse_code', 'mbse_exp',
+        'mbse_user','mbse_name', 'mbse_status', 'mbse_code', 'mbse_exp',
         'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
         'mbr_title', 'mbr_id_num', 'mbr_graduate', 'mbr_graduate_time', 'mbr_training_ins', 'mbr_training_date',
         'mbr_job', 'mbr_loc', 'mbr_zip', 'mbr_phone', 'mbr_email', 'mbr_cert', 'mbr_cert_date', 'mbr_cert_code',
@@ -65,7 +65,7 @@ class CommonFormalAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_type='1', mbse_status='6')
+        qs = qs.filter(mbse_user__identity='1', mbse_status='6')
         return qs
 
 
@@ -75,16 +75,16 @@ class CommonAuditAdmin(object):
     普通待审核会员
     """
     list_display = [
-        'mbr_name', 'mbse_type', 'mbse_status', 'mbse_code', 'mbse_exp',
+        'mbse_name', 'mbse_identity', 'mbse_status', 'mbse_code', 'mbse_exp',
     ]
     list_filter = [
-        'mbse_code', 'mbse_exp', 'mbr_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
+        'mbse_code', 'mbse_exp', 'mbse_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
         'mbr_title', 'mbr_id_num', 'mbr_graduate', 'mbr_graduate_time', 'mbr_training_ins', 'mbr_training_date',
         'mbr_job', 'mbr_loc', 'mbr_zip', 'mbr_phone', 'mbr_email', 'mbr_cert', 'mbr_cert_date', 'mbr_cert_code',
     ]
 
     readonly_fields = [
-        'mbr_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
+        'mbse_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
         'mbr_title', 'mbr_id_num', 'mbr_graduate', 'mbr_graduate_time', 'mbr_training_ins',
         'mbr_training_date',
         'mbr_job', 'mbr_loc', 'mbr_zip', 'mbr_phone', 'mbr_email', 'mbr_cert', 'mbr_cert_date',
@@ -99,7 +99,7 @@ class CommonAuditAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_type='1').exclude(mbse_status='6')
+        qs = qs.filter(mbse_user__identity='1').exclude(mbse_status='6')
         return qs
 
 
@@ -110,10 +110,10 @@ class SeniorFormalAdmin(object):
     """
 
     list_display = [
-        'mbr_name', 'mbse_type', 'mbse_status', 'mbse_code', 'mbse_exp',
+        'mbse_name', 'mbse_identity', 'mbse_status', 'mbse_code', 'mbse_exp',
     ]
     list_filter = [
-        'mbse_code', 'mbse_exp', 'mbr_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
+        'mbse_code', 'mbse_exp','mbse_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
         'mbr_title', 'mbr_id_num', 'mbr_graduate', 'mbr_graduate_time', 'mbr_training_ins', 'mbr_training_date',
         'mbr_job', 'mbr_loc', 'mbr_zip', 'mbr_phone', 'mbr_email', 'mbr_cert', 'mbr_cert_date', 'mbr_cert_code',
     ]
@@ -127,7 +127,7 @@ class SeniorFormalAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_type='2', mbse_status='6')
+        qs = qs.filter(mbse_user__identity='2', mbse_status='6')
         return qs
 
 
@@ -137,10 +137,10 @@ class SeniorAuditAdmin(object):
     高级待审核会员
     """
     list_display = [
-        'mbr_name', 'mbse_type', 'mbse_status', 'mbse_code', 'mbse_exp',
+        'mbse_name', 'mbse_identity', 'mbse_status', 'mbse_code', 'mbse_exp',
     ]
     list_filter = [
-        'mbse_code', 'mbse_exp', 'mbr_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
+        'mbse_code', 'mbse_exp','mbse_name', 'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
         'mbr_title', 'mbr_id_num', 'mbr_graduate', 'mbr_graduate_time', 'mbr_training_ins', 'mbr_training_date',
         'mbr_job', 'mbr_loc', 'mbr_zip', 'mbr_phone', 'mbr_email', 'mbr_cert', 'mbr_cert_date', 'mbr_cert_code',
     ]
@@ -153,7 +153,7 @@ class SeniorAuditAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_type='2').exclude(mbse_status='6')
+        qs = qs.filter(mbse_user__identity='2').exclude(mbse_status='6')
         return qs
 
 
@@ -186,7 +186,7 @@ class IncFormalAdmin(object):
     理事单位会员
     """
     list_display = [
-        'inc_name', 'mbse_type', 'mbse_status', 'mbse_code', 'mbse_exp',
+        'inc_name', 'mbse_identity', 'mbse_status', 'mbse_code', 'mbse_exp',
     ]
     list_filter = [
         'inc_name', 'inc_loc', 'inc_phone', 'inc_fax', 'inc_email', 'inc_site', 'inc_charge',
@@ -198,7 +198,7 @@ class IncFormalAdmin(object):
     model_icon = "fa fa-group"
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_type='3', mbse_status='6')
+        qs = qs.filter(mbse_user__identity='3', mbse_status='6')
         return qs
 
 
@@ -208,7 +208,7 @@ class IncAuditAdmin(object):
     待审核理事单位会员
     """
     list_display = [
-        'inc_name', 'mbse_type', 'mbse_status', 'mbse_code', 'mbse_exp',
+        'inc_name', 'mbse_status', 'mbse_code', 'mbse_exp',
     ]
     list_filter = [
         'inc_name', 'inc_loc', 'inc_phone', 'inc_fax', 'inc_email', 'inc_site', 'inc_charge',
@@ -221,5 +221,5 @@ class IncAuditAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_type='3').exclude(mbse_status='6')
+        qs = qs.filter(mbse_user__identity='3').exclude(mbse_status='6')
         return qs

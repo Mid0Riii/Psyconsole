@@ -8,11 +8,11 @@ class MbrBase(models.Model):
         verbose_name_plural = verbose_name
         abstract = True
 
-    mbse_type = models.CharField(verbose_name='用户类型',
-                                 max_length=16,
-                                 choices=(('0', '未激活'), ('1', '普通会员'), ('2', '高级会员'), ('3', '理事会员')),
-                                 default='0',
-                                 )
+    # mbse_type = models.CharField(verbose_name='用户类型',
+    #                              max_length=16,
+    #                              choices=(('0', '未激活'), ('1', '普通会员'), ('2', '高级会员'), ('3', '理事会员')),
+    #                              default='0',
+    #                              )
     mbse_user = models.OneToOneField(CustomUser,
                                      on_delete=models.CASCADE,
                                      verbose_name='关联用户',
@@ -39,3 +39,16 @@ class MbrBase(models.Model):
                                 null=True,
                                 blank=True
                                 )
+    mbse_name = models.CharField(verbose_name="姓名",
+                                 max_length=128,
+                                 null=True,
+                                 blank=True,
+                                 default='空'
+                                 )
+
+    def mbse_identity(self):
+        c = self.mbse_user
+        print(c.get_identity_display())
+        return c.get_identity_display()
+    mbse_identity.short_description="用户身份"
+

@@ -7,22 +7,28 @@ from django.utils.translation import ugettext as _
 
 from django.contrib.auth import get_user_model
 from xadmin.layout import Fieldset, Main, Side, Row
-
+from django.contrib.auth.forms import UserCreationForm,UsernameField
 User = get_user_model()
 
+
+class MyUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields=("username","identity")
+        field_classes={"username":UsernameField,}
 
 
 
 class CustomUserAdmin(object):
-    list_display = ['id', 'name','username' 'phone', ]
-    list_filter = ['username', 'phone', ]
+    list_display = ['id', 'name','username' 'phone','identity' ]
+    list_filter = ['username', 'phone','identity' ]
     list_editable = [ 'username', 'phone', ]
     show_bookmarks = False
 
 
 class UserAdmin(object):
     change_user_password_template = None
-    list_display = ['username', 'phone',]
+    list_display = ['username', 'phone','identity']
     list_filter = ['username', 'phone', ]
     list_editable = [ 'username', 'phone']
     show_bookmarks = False
@@ -33,7 +39,7 @@ class UserAdmin(object):
 
     def get_model_form(self, **kwargs):
         if self.org_obj is None:
-            self.form = UserCreationForm
+            self.form = MyUserCreationForm
         else:
             self.form = UserChangeForm
         return super(UserAdmin, self).get_model_form(**kwargs)
@@ -43,8 +49,9 @@ class UserAdmin(object):
             self.form_layout = (
                 Main(
                     Fieldset(_('Personal info'),
-                             'name',
+                             'username',
                              'phone',
+                             'identity',
                              ),
                     Fieldset('账号信息',
                              'username', 'password',

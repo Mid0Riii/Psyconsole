@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'myauth',
     'membership',
     'financial',
+    'record',
 
 
     'django.contrib.admin',

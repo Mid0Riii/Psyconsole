@@ -41,7 +41,11 @@ class CustomUser(AbstractUser):
     id=models.AutoField(verbose_name="id",primary_key=True)
     username = models.CharField(max_length=255,verbose_name="用户名",unique=True)
     phone = models.CharField(max_length=128,verbose_name="手机号",null=True,blank=True)
-
+    identity = models.CharField(verbose_name='用户类型',
+                                 max_length=16,
+                                 choices=(('0', '未激活'), ('1', '普通会员'), ('2', '高级会员'), ('3', '理事会员')),
+                                 default='0',
+                                 )
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
