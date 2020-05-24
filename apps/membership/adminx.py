@@ -186,10 +186,10 @@ class IncFormalAdmin(object):
     理事单位会员
     """
     list_display = [
-        'inc_name', 'mbse_identity', 'mbse_status', 'mbse_code', 'mbse_exp',
+        'mbse_name', 'mbse_identity', 'mbse_status', 'mbse_code', 'mbse_exp',
     ]
     list_filter = [
-        'inc_name', 'inc_loc', 'inc_phone', 'inc_fax', 'inc_email', 'inc_site', 'inc_charge',
+        'mbse_name', 'inc_loc', 'inc_phone', 'inc_fax', 'inc_email', 'inc_site', 'inc_charge',
         'inc_charge_code', 'inc_corporate', 'inc_corp_phone', 'inc_director', 'inc_director_phone',
         'inc_info',
     ]
@@ -208,10 +208,10 @@ class IncAuditAdmin(object):
     待审核理事单位会员
     """
     list_display = [
-        'inc_name', 'mbse_status', 'mbse_code', 'mbse_exp',
+        'mbse_name', 'mbse_status', 'mbse_code', 'mbse_exp',
     ]
     list_filter = [
-        'inc_name', 'inc_loc', 'inc_phone', 'inc_fax', 'inc_email', 'inc_site', 'inc_charge',
+        'mbse_name', 'inc_loc', 'inc_phone', 'inc_fax', 'inc_email', 'inc_site', 'inc_charge',
         'inc_charge_code', 'inc_corporate', 'inc_corp_phone', 'inc_director', 'inc_director_phone',
         'inc_info',
     ]

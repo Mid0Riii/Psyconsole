@@ -107,6 +107,6 @@ class MbrCommon(MbrBase):
 
     def save(self,*args,**kwargs):
         super(MbrCommon, self).save(*args,**kwargs)
-        if self.mbse_status=='3':
+        if self.mbse_status=='3' and self.mbse_user.identity=='1':
             Order.objects.create(user=self.mbse_user)
 

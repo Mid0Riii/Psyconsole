@@ -36,3 +36,6 @@ class Order(models.Model):
                                   null=True,
                                   blank=True
                                   )
+    # def save(self,*args,**kwargs):
+    #     super(Order,self).save(*args,**kwargs)
+    #     if self.
