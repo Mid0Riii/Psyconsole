@@ -5,7 +5,7 @@ class MbrCommonSerializers(serializers.ModelSerializer):
     class Meta:
         model = MbrCommon
         # fields="__all__"
-        exclude = ['mbse_user','mbse_status','mbse_judge','mbse_code','mbse_exp']
+        exclude = ['mbse_status','mbse_judge','mbse_code','mbse_exp']
 
 class MbrIncSerializers(serializers.ModelSerializer):
     class Meta:

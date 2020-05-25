@@ -4,8 +4,8 @@ from rest_framework import routers
 from . import views
 
 routers = routers.DefaultRouter()
-routers.register(r'mbr',views.MemberViewSet)
-routers.register(r'inc',views.IncViewSet)
+routers.register(r'mbr',views.MemberViewSet,basename='mbr')
+routers.register(r'inc',views.IncViewSet,basename='inc')
 
 
 urlpatterns=[

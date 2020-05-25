@@ -5,7 +5,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework_jwt.views import obtain_jwt_token,refresh_jwt_token
 import xadmin
-
+from django.contrib import admin
 schema_view = get_schema_view(
    openapi.Info(
       title="报名系统后端API",
@@ -17,8 +17,8 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    # path('admin', admin.site.urls),
-    path('admin/',xadmin.site.urls),
+    path('admin/', admin.site.urls),
+    path('xadmin/',xadmin.site.urls),
     path('api/member/',include("membership.urls")),
     path('api/financial/',include("financial.urls")),
     path('api/record/',include("record.urls")),

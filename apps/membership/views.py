@@ -17,8 +17,9 @@ class MbrListMixin(ListModelMixin):
 
 class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
     serializer_class = MbrCommonSerializers
-    queryset = MbrCommon.objects.all()
     permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        return MbrCommon.objects.filter(mbse_user=self.request.user)
 
     # @action(methods=['post'],detail=False)
     def create(self, request):
@@ -29,6 +30,8 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
         try:
             s = MbrCommonSerializers(data=rawdata, context={'request': request})
             if s.is_valid():
+                s.data.mbse_user = request.user.id
+                s.validated_data
                 s.save()
                 return FormatResponse(code=201, msg="提交成功", data=s.data, status=status.HTTP_201_CREATED)
             else:
@@ -70,8 +73,9 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
 
 class IncViewSet(viewsets.GenericViewSet, MbrListMixin):
     serializer_class = MbrIncSerializers
-    queryset = MbrInc.objects.all()
 
+    def get_queryset(self):
+        return MbrInc.objects.filter(mbse_user=self.request.user)
     # @action(methods=['post'],detail=False)
     def create(self, request):
         """

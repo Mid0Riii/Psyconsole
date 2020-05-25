@@ -199,7 +199,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
-    'EXCEPTION_HANDLER':'utils.exception_handler'
+    'EXCEPTION_HANDLER':'utils.drf.exception_handler'
 }
 
 AUTHENTICATION_BACKENDS =(
@@ -244,3 +244,29 @@ CORS_ALLOW_CREDENTIALS = True
 # 允许所有主机执行跨站点请求，默认为False
 # 如果没设置该参数，则必须设置白名单，运行部分白名单的主机才能执行跨站点请求
 CORS_ORIGIN_ALLOW_ALL = True
+
+SWAGGER_SETTINGS = {
+    'LOGIN_URL': '/admin/login',
+    'LOGOUT_URL': '/admin/logout',
+    'PERSIST_AUTH': True,
+    'REFETCH_SCHEMA_WITH_AUTH': True,
+    'REFETCH_SCHEMA_ON_LOGOUT': True,
+
+    'DEFAULT_INFO': 'DjangoDrfTest.urls.swagger_info',#这里注意，更改DjangoDrfTest
+
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        },
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'authorization',
+            'in': 'header'
+        },
+        'Query': {
+            'type': 'apiKey',
+            'name': 'auth',
+            'in': 'query'
+        }
+    }
+}

@@ -15,6 +15,7 @@ class OrderListMixin(ListModelMixin):
     def list(self, request, *args, **kwargs):
         try:
             response = super().list(request, *args, **kwargs)
+
             return FormatResponse(code=200, msg="获取成功", data=response.data, status=status.HTTP_200_OK)
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
@@ -22,9 +23,11 @@ class OrderListMixin(ListModelMixin):
 
 class OrderViewSet(viewsets.GenericViewSet, OrderListMixin):
     serializer_class = OrderSerializers
-    queryset = Order.objects.all()
-    permission_classes = [IsAuthenticated,IsOwnerOrReadOnly]
+    # queryset = Order.objects.all()
+    permission_classes = (IsAuthenticated)
 
+    def get_queryset(self):
+        return Order.objects.filter(relate_user=self.request.user)
     # # @action(methods=['post'],detail=False)
     # def create(self, request):
     #     """
