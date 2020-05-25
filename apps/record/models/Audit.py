@@ -1,14 +1,16 @@
 from django.db import models
 from .Activity import Activity
 from myauth.models import CustomUser
-from membership.models import MbrBase
+from membership.models import MbrBase,MbrCommon
+
+
 class Audit(models.Model):
 
     class Meta:
         verbose_name = '活动参加申请管理'
         verbose_name_plural = verbose_name
-    def __str__(self):
-        return str(self.relate_activity)+"-"+str(self.audit_name)
+    # def __str__(self):
+    #     return str(self.relate_activity)+"-"+str(self.audit_name)
 
     relate_activity = models.ForeignKey(Activity,
                                         verbose_name="关联活动",
@@ -25,5 +27,10 @@ class Audit(models.Model):
                                     default='0',
                                     )
     def audit_name(self):
-        m = MbrBase.objects.get(mbse_user = self.audit_user)
+        m = MbrCommon.objects.get(mbse_user = self.audit_user.id)
         return m.mbse_name
+
+    def save(self, *args, **kwargs):
+        super(Audit, self).save(*args, **kwargs)
+        print(MbrCommon.objects.get(mbse_user=1))
+

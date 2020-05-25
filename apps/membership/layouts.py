@@ -5,7 +5,7 @@ MbrLayout = \
     (
         Main(
             Fieldset(_('会员信息'),
-                     Row('mbse_type','mbse_user'),
+                     Row('mbse_user'),
                      'mbse_status',
                      ),
             Fieldset(_('个人信息'),

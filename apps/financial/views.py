@@ -7,6 +7,8 @@ from rest_framework import viewsets,filters
 from rest_framework.mixins import ListModelMixin
 from rest_framework.decorators import action
 from utils.drf import FormatResponse
+from rest_framework.permissions import IsAuthenticated
+from utils.drf import IsOwnerOrReadOnly
 # Create your views here.
 
 class OrderListMixin(ListModelMixin):
@@ -21,6 +23,7 @@ class OrderListMixin(ListModelMixin):
 class OrderViewSet(viewsets.GenericViewSet, OrderListMixin):
     serializer_class = OrderSerializers
     queryset = Order.objects.all()
+    permission_classes = [IsAuthenticated,IsOwnerOrReadOnly]
 
     # # @action(methods=['post'],detail=False)
     # def create(self, request):
@@ -48,6 +51,9 @@ class OrderViewSet(viewsets.GenericViewSet, OrderListMixin):
         try:
             s = Order.objects.get(id=pk)
             ser = OrderSerializers(instance=s, data=request.data, context={'request': request})
+            if ser.status!="0" or ser.status!="1":
+                return FormatResponse(code=400, msg="错误", data="权限不足",
+                                      status=status.HTTP_400_BAD_REQUEST)
             if ser.is_valid():
                 ser.save()
                 return FormatResponse(code=201, msg="修改成功", data=ser.data, status=status.HTTP_201_CREATED)

@@ -53,19 +53,19 @@ def set_menu(self):
                     },
                 )
         },
-        {
-            'title': '缴费信息管理',
-            'icon': 'fa fa-money',
-            'menus':
-                (
-                    {
-                        'title': '缴费信息',
-                        'perm': self.get_model_perm(Order, 'view'),
-                        'url': self.get_model_url(Order, 'changelist'),
-                        'icon': 'fa fa-money'
-                    },
-                )
-        },
+        # {
+        #     'title': '缴费信息管理',
+        #     'icon': 'fa fa-money',
+        #     'menus':
+        #         (
+        #             {
+        #                 'title': '缴费信息',
+        #                 'perm': self.get_model_perm(Order, 'view'),
+        #                 'url': self.get_model_url(Order, 'changelist'),
+        #                 'icon': 'fa fa-money'
+        #             },
+        #         )
+        # },
         {
             'title':'用户管理',
             'icon':'fa fa-user',

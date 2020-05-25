@@ -1,11 +1,13 @@
 from django.db import models
 from .MbrBase import MbrBase
 from django.utils.html import format_html
-from financial.models import Order
+
+
 class MbrCommon(MbrBase):
     class Meta:
         verbose_name = '成员'
         verbose_name_plural = verbose_name
+        abstract = False
 
     def __str__(self):
         return self.mbse_name
@@ -105,8 +107,14 @@ class MbrCommon(MbrBase):
                                        blank=True
                                        )
 
-    def save(self,*args,**kwargs):
-        super(MbrCommon, self).save(*args,**kwargs)
-        if self.mbse_status=='3' and self.mbse_user.identity=='1':
-            Order.objects.create(user=self.mbse_user)
+    objects = models.Manager()
+
+    def save(self, *args, **kwargs):
+        from financial.models import Order
+        super(MbrCommon, self).save(*args, **kwargs)
+        if self.mbse_status == '3' and self.mbse_user.identity == '1':
+            Order.objects.create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="60")
+        elif self.mbse_status == '3' and self.mbse_user.identity == '2':
+            Order.objects.create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="100")
+
 

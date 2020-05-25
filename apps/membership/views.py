@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework import viewsets, filters
 from rest_framework.mixins import ListModelMixin
 from utils.drf import FormatResponse
-
+from rest_framework.permissions import IsAuthenticated
 
 class MbrListMixin(ListModelMixin):
     def list(self, request, *args, **kwargs):
@@ -18,6 +18,7 @@ class MbrListMixin(ListModelMixin):
 class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
     serializer_class = MbrCommonSerializers
     queryset = MbrCommon.objects.all()
+    permission_classes = [IsAuthenticated]
 
     # @action(methods=['post'],detail=False)
     def create(self, request):

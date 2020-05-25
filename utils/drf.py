@@ -90,3 +90,22 @@ def exception_handler(exc, context):
         return Response({"code": 400, "message": "错误", "data": data}, status=exc.status_code, headers=headers)
 
     return None
+
+
+from rest_framework.permissions import BasePermission,SAFE_METHODS
+
+class IsOwnerOrReadOnly(BasePermission):
+    """
+    Object-level permission to only allow owners of an object to edit it.
+    Assumes the model instance has an `owner` attribute.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+        if request.method in SAFE_METHODS:
+            return True
+
+        # Instance must have an attribute named `owner`.
+        return obj.user == request.user
+
