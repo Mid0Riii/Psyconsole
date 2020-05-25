@@ -57,7 +57,7 @@ class CustomUserViewSet(viewsets.GenericViewSet):
                             status=status.HTTP_201_CREATED)
 
     @action(methods=['post'], detail=True)
-    def updateUser(self, request):
+    def updateUser(self, request,pk):
         rawData = request.data
         new_password = rawData["new_password"]
         phone = rawData['phone']
