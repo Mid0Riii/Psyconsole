@@ -110,7 +110,20 @@ class IsOwnerOrReadOnly(BasePermission):
         return obj.user == request.user
 
 from rest_framework.permissions import BasePermission
+from membership.models import MbrCommon
+
 class IsFormalMember(BasePermission):
+    """
+    判断用户是否为正式会员
+    """
 
     def has_permission(self, request, view):
         u = request.user
+        try:
+            m = MbrCommon.objects.get(mbse_user=u)
+            if m.mbse_status=='6':
+                return True
+            else:
+                return False
+        except Exception as e:
+            return False

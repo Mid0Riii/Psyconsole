@@ -4,9 +4,9 @@ from rest_framework import routers
 from . import views
 
 routers = routers.DefaultRouter()
-routers.register(r'act',views.ActivityViewSet)
-routers.register(r'dir',views.DiaryViewSet)
-routers.register(r'aud',views.AuditViewSet)
+routers.register(r'act',views.ActivityViewSet,basename='act')
+routers.register(r'dir',views.DiaryViewSet,basename='dir')
+routers.register(r'aud',views.AuditViewSet,basename='aud')
 
 urlpatterns=[
     # path(r'',views.StrategyApiView.as_view()),

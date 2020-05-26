@@ -6,6 +6,7 @@ from rest_framework.mixins import ListModelMixin
 from utils.drf import FormatResponse
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from utils.drf import IsFormalMember
 
 class MyListMixin(ListModelMixin):
     def list(self, request, *args, **kwargs):
@@ -19,12 +20,14 @@ class MyListMixin(ListModelMixin):
 class ActivityViewSet(viewsets.GenericViewSet, MyListMixin):
     serializer_class = ActivitySerializers
     queryset = Activity.objects.all()
-
+    permission_classes = [IsAuthenticated,IsFormalMember]
 
 class AuditViewSet(viewsets.GenericViewSet, MyListMixin):
     serializer_class = AuditSerializers
-    queryset = Audit.objects.all()
+    permission_classes = [IsAuthenticated, IsFormalMember]
 
+    def get_queryset(self):
+        return Audit.objects.filter(audit_user = self.request.user)
     def create(self, request):
         """
         新建申请
