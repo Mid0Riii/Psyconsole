@@ -30,8 +30,7 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
         try:
             s = MbrCommonSerializers(data=rawdata, context={'request': request})
             if s.is_valid():
-                s.data.mbse_user = request.user.id
-                s.validated_data
+                s.validated_data.mbse_user = request.user.id
                 s.save()
                 return FormatResponse(code=201, msg="提交成功", data=s.data, status=status.HTTP_201_CREATED)
             else:

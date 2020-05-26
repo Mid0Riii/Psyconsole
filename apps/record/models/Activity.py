@@ -40,3 +40,18 @@ class Activity(models.Model):
                                        null=True,
                                        blank=True
                                        )
+    def save(self, *args,**kwargs):
+        from .Audit import Audit
+        from .Diary import Diary
+        super(Activity, self).save(*args, **kwargs)
+        if self.act_is_available==True:
+            if self.act_need_audit:
+                queryset = Audit.objects.filter(relate_activity=self,audit_status='1')
+                for q in queryset:
+                    Diary.objects.create(relate_act = self,related_user = q.audit_user,diary_title=self.act_title,diary_date = self.act_date,
+                                         diary_loc = self.act_loc,diary_method = self.act_method)
+            else:
+                queryset = Audit.objects.filter(relate_activity=self)
+                for q in queryset:
+                    Diary.objects.create(relate_act = self,related_user = q.audit_user,diary_title=self.act_title,diary_date = self.act_date,
+                                         diary_loc = self.act_loc,diary_method = self.act_method)

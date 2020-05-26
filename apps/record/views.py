@@ -5,7 +5,7 @@ from rest_framework import viewsets, filters
 from rest_framework.mixins import ListModelMixin
 from utils.drf import FormatResponse
 from rest_framework.decorators import action
-
+from rest_framework.permissions import IsAuthenticated
 
 class MyListMixin(ListModelMixin):
     def list(self, request, *args, **kwargs):

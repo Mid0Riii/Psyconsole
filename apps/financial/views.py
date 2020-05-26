@@ -24,7 +24,7 @@ class OrderListMixin(ListModelMixin):
 class OrderViewSet(viewsets.GenericViewSet, OrderListMixin):
     serializer_class = OrderSerializers
     # queryset = Order.objects.all()
-    permission_classes = (IsAuthenticated)
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Order.objects.filter(relate_user=self.request.user)

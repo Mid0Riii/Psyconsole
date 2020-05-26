@@ -109,3 +109,8 @@ class IsOwnerOrReadOnly(BasePermission):
         # Instance must have an attribute named `owner`.
         return obj.user == request.user
 
+from rest_framework.permissions import BasePermission
+class IsFormalMember(BasePermission):
+
+    def has_permission(self, request, view):
+        u = request.user
