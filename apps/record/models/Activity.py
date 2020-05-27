@@ -35,8 +35,7 @@ class Activity(models.Model):
                                   max_length=128,
                                   null=True,
                                   blank=True)
-    act_description = models.CharField(verbose_name="活动描述",
-                                       max_length=1024,
+    act_description = models.TextField(verbose_name="活动描述",
                                        null=True,
                                        blank=True
                                        )

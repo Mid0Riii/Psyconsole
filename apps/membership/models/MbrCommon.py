@@ -12,6 +12,8 @@ class MbrCommon(MbrBase):
     def __str__(self):
         return self.mbse_name
 
+    mbr_avatar = models.ImageField(upload_to='avatars/',null=True,blank=True,verbose_name="照片")
+
     mbr_gender = models.CharField(verbose_name='性别',
                                   max_length=128,
                                   null=True,
@@ -113,8 +115,9 @@ class MbrCommon(MbrBase):
         from financial.models import Order
         super(MbrCommon, self).save(*args, **kwargs)
         if self.mbse_status == '3' and self.mbse_user.identity == '1':
-            Order.objects.create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="60")
+
+            Order.objects.update_or_create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="60")
         elif self.mbse_status == '3' and self.mbse_user.identity == '2':
-            Order.objects.create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="100")
+            Order.objects.update_or_create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="100")
 
 

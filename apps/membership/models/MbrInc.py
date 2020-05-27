@@ -68,8 +68,17 @@ class MbrInc(MbrBase):
                                      null=True,
                                      blank=True
                                      )
+    inc_opinion = models.TextField(verbose_name="审批理事单位负责人意见",
+                                   null=True,
+                                   blank=True,
+                                   )
     inc_info = models.TextField(verbose_name='备注',
-                                     max_length=128,
                                      null=True,
                                      blank=True
                                      )
+
+    def save(self, *args, **kwargs):
+        from financial.models import OrderInc
+        super(MbrInc, self).save(*args, **kwargs)
+        if self.mbse_status == '3' and self.mbse_user.identity == '3':
+            OrderInc.objects.update_or_create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name)

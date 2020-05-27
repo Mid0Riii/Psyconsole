@@ -6,6 +6,9 @@ from drf_yasg import openapi
 from rest_framework_jwt.views import obtain_jwt_token,refresh_jwt_token
 import xadmin
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
+
 schema_view = get_schema_view(
    openapi.Info(
       title="报名系统后端API",
@@ -28,4 +31,4 @@ urlpatterns = [
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

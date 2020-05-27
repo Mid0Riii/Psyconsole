@@ -5,6 +5,9 @@ from rest_framework import viewsets, filters
 from rest_framework.mixins import ListModelMixin
 from utils.drf import FormatResponse
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from django_filters import rest_framework as drf_filter
+import django_filters
 
 class MbrListMixin(ListModelMixin):
     def list(self, request, *args, **kwargs):
@@ -39,8 +42,8 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
         except Exception as e:
             return FormatResponse(code=400, msg="提交失败", data=str(e), status=status.HTTP_400_BAD_REQUEST)
 
-    # @action(methods=['patch'], detail=True,)
-    def update(self, request, pk):
+    @action(methods=['patch'], detail=True,url_path='update')
+    def updateP(self, request, pk):
         """
         编辑会员申请
         """
@@ -57,6 +60,43 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
 
+    @action(methods=['post'],detail=False,)
+    def is_user(self,request):
+        """
+        查询是否为本单位会员
+        """
+        data = request.data
+        name=data['name']
+        phone=data['phone']
+        id=data['id']
+        try:
+            s = MbrCommon.objects.get(mbse_name=name,mbse_user__phone=phone,mbr_id_num=id)
+            if s.mbse_status=='6' and s.mbse_user.identity!='0':
+                return FormatResponse(code=200,msg="您是本协会的会员",data="",status=status.HTTP_200_OK)
+            else:
+                return FormatResponse(code=400,msg="未查询到符合条件的信息或申请正在审核中",data="",status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return FormatResponse(code=400, msg="未查询到符合条件的信息或申请正在审核中", data=str(e), status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=['get'], detail=True)
+    def MbrJudgePass(self, request, pk):
+        try:
+            s = MbrCommon.objects.get(id=pk)
+            s.mbse_status = '3'
+            s.save()
+            return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
+        except Exception as e:
+            return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=['get'],detail=True)
+    def MbrJudgeDeny(self,request,pk):
+        try:
+            s = MbrCommon.objects.get(id=pk)
+            s.mbse_status = '2'
+            s.save()
+            return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
+        except Exception as e:
+            return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
     # @action(methods=['delete'], detail=True)
     # def delete(self, request, pk):
     #     """
@@ -106,6 +146,26 @@ class IncViewSet(viewsets.GenericViewSet, MbrListMixin):
             else:
                 return FormatResponse(code=400, msg="错误", data=str(ser.errors),
                                       status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=['get'], detail=True)
+    def IncJudgePass(self, request, pk):
+        try:
+            s = MbrInc.objects.get(id=pk)
+            s.mbse_status = '3'
+            s.save()
+            return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
+        except Exception as e:
+            return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=['get'], detail=True)
+    def IncJudgeDeny(self, request, pk):
+        try:
+            s = MbrInc.objects.get(id=pk)
+            s.mbse_status = '2'
+            s.save()
+            return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
 

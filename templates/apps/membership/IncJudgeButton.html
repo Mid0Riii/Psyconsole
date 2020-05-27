@@ -1,0 +1,44 @@
+<script>
+    $(document).ready(function () {
+        $("#pass").click(function () {
+            url = window.location.pathname;
+            id = url.split("/")[4];
+            updateobj = $.ajax(
+                {
+                    url: "/api/member/inc/" + id + "/IncJudgePass",
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                        alert("审核通过");
+                        window.location.reload();
+                    },
+                    error: function (res) {
+                        console.log(res);
+                        alert("错误，请联系开发人员");
+                    },
+                }
+            )
+        });
+        $("#deny").click(function () {
+            url = window.location.pathname;
+            id = url.split("/")[4];
+            updateobj = $.ajax(
+                {
+                    url: "/api/member/inc/" + id + "/IncJudgeDeny",
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                        alert("审核驳回");
+                        window.location.reload();
+                    },
+                    error: function (res) {
+                        console.log(res);
+                        alert("错误，请联系开发人员\n错误原因"+str(res));
+                    },
+                }
+            )
+        });
+    })
+</script>
+<button type="button" id="pass" class="btn btn-success">审核通过</button>
+<button type="button" id="deny" class="btn btn-danger">审核驳回</button>

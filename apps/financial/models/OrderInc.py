@@ -1,11 +1,11 @@
 from django.db import models
+from membership.models import MbrInc
 from myauth.models import CustomUser
-from membership.models import MbrCommon, MbrInc
 
 
-class Order(models.Model):
+class OrderInc(models.Model):
     class Meta:
-        verbose_name = '个人订单信息'
+        verbose_name = '理事订单信息'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -16,7 +16,7 @@ class Order(models.Model):
                                     verbose_name="关联用户",
                                     on_delete=models.CASCADE,
                                     )
-    relate_member = models.ForeignKey(MbrCommon,
+    relate_member = models.ForeignKey(MbrInc,
                                       verbose_name="关联会员",
                                       on_delete=models.CASCADE,
                                       null=True,
@@ -61,7 +61,7 @@ class Order(models.Model):
                               )
 
     def save(self, *args, **kwargs):
-        super(Order, self).save(*args, **kwargs)
+        super(OrderInc, self).save(*args, **kwargs)
         m = self.relate_member
         if self.status == '3':
             m.mbse_status = 6
@@ -69,5 +69,3 @@ class Order(models.Model):
         elif self.status == '2':
             m.mbse_status = 5
             m.save(update_fields=["mbse_status"])
-
-

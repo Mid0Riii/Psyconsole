@@ -13,7 +13,7 @@ class MbrBase(models.Model):
     #                              choices=(('0', '未激活'), ('1', '普通会员'), ('2', '高级会员'), ('3', '理事会员')),
     #                              default='0',
     #                              )
-    mbse_user = models.OneToOneField(CustomUser,
+    mbse_user = models.ForeignKey(CustomUser,
                                      on_delete=models.CASCADE,
                                      verbose_name='关联用户',
                                      )
@@ -34,8 +34,7 @@ class MbrBase(models.Model):
                                  max_length=128,
                                  null=True,
                                  blank=True)
-    mbse_exp = models.CharField(verbose_name='有效期',
-                                max_length=128,
+    mbse_exp = models.DateField(verbose_name='有效期',
                                 null=True,
                                 blank=True
                                 )

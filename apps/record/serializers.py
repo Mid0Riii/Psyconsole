@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from .models import Audit,Activity,Diary
 
+#TODO 问问前端能不能获取member
 class AuditSerializers(serializers.ModelSerializer):
     class Meta:
         model = Audit
         fields = "__all__"
-    read_only_fields=['audit_status','relate_activity','audit_user']
+    read_only_fields=['audit_status','relate_activity','audit_user','audit_member']
 
 class DiarySerializers(serializers.ModelSerializer):
     class Meta:
