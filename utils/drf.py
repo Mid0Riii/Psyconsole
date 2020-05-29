@@ -50,9 +50,9 @@ def jwt_response_payload_handler(token,user=None,request=None):
             "token":token,
             "userid":user.id,
             "username":user.username,
+            "identity":user.identity,
         }
     }
-
 def set_rollback():
     atomic_requests = connection.settings_dict.get('ATOMIC_REQUESTS', False)
     if atomic_requests and connection.in_atomic_block:
@@ -87,7 +87,7 @@ def exception_handler(exc, context):
             data = {'detail': exc.detail}
 
         set_rollback()
-        return Response({"code": 400, "message": "错误", "data": data}, status=exc.status_code, headers=headers)
+        return Response({"code": 400, "message": "验证错误", "data": data}, status=exc.status_code, headers=headers)
 
     return None
 

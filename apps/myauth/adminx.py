@@ -28,7 +28,7 @@ class CustomUserAdmin(object):
 
 class UserAdmin(object):
     change_user_password_template = None
-    list_display = ['username', 'phone','identity']
+    list_display = ['username', 'phone','identity','is_active']
     list_filter = ['username', 'phone', ]
     list_editable = [ 'username', 'phone']
     show_bookmarks = False
@@ -50,25 +50,20 @@ class UserAdmin(object):
                 Main(
                     Fieldset(_('Personal info'),
                              'username',
+                             'password',
                              'phone',
                              'identity',
                              ),
-                    Fieldset('账号信息',
-                             'username', 'password',
-                             css_class='unsort no_title'
-                             ),
-                    Fieldset(None,
-                             'groups', 'user_permissions','first_name','last_name','email',**{"style":"display:None"}
+                    Fieldset(_('权限信息'),
+                             'groups', 'user_permissions','first_name','last_name','email',
                              ),
                     Fieldset(_('Important dates'),
                              'last_login', 'date_joined'
                              ),
+                    Fieldset(_('用户状态'),
+                             'is_active', 'is_staff', 'is_superuser',
+                             )
                 ),
-                Side(
-                    Fieldset(None,
-                             'is_active', 'is_staff', 'is_superuser',**{"style":"display:None"}
-                             ),
-                )
             )
         return super(UserAdmin, self).get_form_layout()
 xadmin.site.unregister(CustomUser)

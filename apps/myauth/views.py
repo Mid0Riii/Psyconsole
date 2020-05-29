@@ -36,7 +36,6 @@ class CustomUserViewSet(viewsets.GenericViewSet):
     serializer_class = CustomUserSerializers
     queryset = CustomUser.objects.all()
 
-
     @action(methods=["post"], detail=False)
     def signup(self, request):
         serializer_class = CustomUserSerializers
@@ -44,14 +43,15 @@ class CustomUserViewSet(viewsets.GenericViewSet):
         username = rawData['username']
         password = rawData['password']
         phone = rawData['phone']
+        identity = rawData['identity']
         r = CustomUser.objects.filter(username=username)
         if r.exists():
             return Response({"code": 400, "message": "该用户名已被注册", "data": ""}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            u = CustomUser.objects.create(username=username, phone=phone)
+            u = CustomUser.objects.create(username=username, phone=phone,identity=identity)
             u.set_password(password)
             u.save()
-            return Response({"code": 201, "message": "注册成功", "data": {"id":u.id,"username": username, "password": password}},
+            return Response({"code": 201, "message": "注册成功", "data": {"id":u.id,"identity":u.identity,"username": username, "password": password}},
                             status=status.HTTP_201_CREATED)
 
     @action(methods=['post'],detail=False)
@@ -67,6 +67,7 @@ class CustomUserViewSet(viewsets.GenericViewSet):
         try:
             q = CustomUser.objects.get(id=id)
             q.set_password(new_password)
+            q.phone = phone
             q.save()
             return Response({"code": 200, "message": "修改成功", "data": ""}, status=status.HTTP_200_OK)
         except Exception as e:

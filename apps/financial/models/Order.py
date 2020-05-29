@@ -61,11 +61,13 @@ class Order(models.Model):
                               )
 
     def save(self, *args, **kwargs):
+        from certification.models import MbrCert
         super(Order, self).save(*args, **kwargs)
         m = self.relate_member
         if self.status == '3':
             m.mbse_status = 6
             m.save(update_fields=["mbse_status"])
+            MbrCert.objects.update_or_create(relate_member = self.relate_member)
         elif self.status == '2':
             m.mbse_status = 5
             m.save(update_fields=["mbse_status"])

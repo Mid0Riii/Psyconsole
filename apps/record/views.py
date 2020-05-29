@@ -60,6 +60,9 @@ class DiaryViewSet(viewsets.GenericViewSet,MyListMixin):
     serializer_class = DiarySerializers
     queryset = Diary.objects.all()
 
+    def get_queryset(self):
+        return Diary.objects.filter(related_user=self.request.user)
+
     def update(self,request,pk):
         """
         编辑活动足迹

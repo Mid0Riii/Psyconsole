@@ -77,7 +77,7 @@ class CommonFormalAdmin(object):
     list_editable = list_display
     readonly_fields = [
         'mbse_user','mbse_name', 'mbse_status', 'mbse_code', 'mbse_exp','mbr_avatar',
-        'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk',
+        'mbr_gender', 'mbr_birth', 'mbr_political', 'mbr_folk','mbr_achievement',
         'mbr_title', 'mbr_id_num', 'mbr_graduate', 'mbr_graduate_time', 'mbr_training_ins', 'mbr_training_date',
         'mbr_job', 'mbr_loc', 'mbr_zip', 'mbr_phone', 'mbr_email', 'mbr_cert', 'mbr_cert_date', 'mbr_cert_code',
     ]
