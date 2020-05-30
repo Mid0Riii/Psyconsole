@@ -72,7 +72,7 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
         id = data['id']
         try:
             s = MbrCommon.objects.get(mbse_name=name, mbr_phone=phone, mbr_id_num=id)
-            if s.mbse_status == '6' and s.mbse_user.identity != '0':
+            if s.mbse_status == '2006' and s.mbse_user.identity != '1000':
                 return FormatResponse(code=200, msg="您是本协会的会员", data="", status=status.HTTP_200_OK)
             else:
                 return FormatResponse(code=400, msg="未查询到符合条件的信息或申请正在审核中", data="", status=status.HTTP_400_BAD_REQUEST)
