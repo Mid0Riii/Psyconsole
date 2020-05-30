@@ -49,7 +49,6 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
         """
         编辑会员申请
         """
-
         try:
             s = MbrCommon.objects.get(id=pk)
             ser = MbrCommonSerializers(instance=s, data=request.data, context={'request': request})
@@ -186,7 +185,7 @@ class AvatarViewSet(viewsets.GenericViewSet):
             ser = MbrAvatarSerializers(instance=s,data=request.data)
             if ser.is_valid():
                 ser.save()
-                return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
+                return FormatResponse(code=200, msg="成功", data=ser.data, status=status.HTTP_200_OK)
             else:
                 return FormatResponse(code=400, msg="错误", data=str(s.errors), status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
