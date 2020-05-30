@@ -116,7 +116,6 @@ class IsFormalMember(BasePermission):
     """
     判断用户是否为正式会员
     """
-
     def has_permission(self, request, view):
         u = request.user
         try:

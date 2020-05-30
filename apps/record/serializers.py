@@ -18,4 +18,16 @@ class DiarySerializers(serializers.ModelSerializer):
 class ActivitySerializers(serializers.ModelSerializer):
     class Meta:
         model = Activity
-        fields = "__all__"
+        fields = ['act_is_available','act_need_audit','act_title','act_date',
+                  'act_loc','act_method','act_description','audit_status']
+    audit_status = serializers.SerializerMethodField()
+
+    def get_audit_status(self,obj):
+        user = self.context['request'].user
+        try:
+            m = Audit.objects.get(relate_activity=obj,audit_user=user)
+            return m.get_audit_status_display()
+        except Exception as e:
+            return str(e)
+
+

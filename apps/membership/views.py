@@ -116,6 +116,7 @@ class IncViewSet(viewsets.GenericViewSet, MbrListMixin):
     serializer_class = MbrIncSerializers
 
     def get_queryset(self):
+
         return MbrInc.objects.filter(mbse_user=self.request.user)
 
     # @action(methods=['post'],detail=False)

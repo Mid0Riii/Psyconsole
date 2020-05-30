@@ -13,7 +13,7 @@ class MbrBase(models.Model):
     #                              choices=(('0', '未激活'), ('1', '普通会员'), ('2', '高级会员'), ('3', '理事会员')),
     #                              default='0',
     #                              )
-    mbse_user = models.ForeignKey(CustomUser,
+    mbse_user = models.OneToOneField(CustomUser,
                                      on_delete=models.CASCADE,
                                      verbose_name='关联用户',
                                      )
@@ -24,7 +24,7 @@ class MbrBase(models.Model):
                                             ('4', '缴费校验中'), ('5', '缴费校验不通过，请重新确认'),
                                             ('6', '已成为正式会员'),
                                             ),
-                                   default='0',
+                                   default='1',
                                    )
     mbse_judge = models.TextField(verbose_name='协会审批意见',
                                   null=True,
