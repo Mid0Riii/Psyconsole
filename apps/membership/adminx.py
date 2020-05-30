@@ -34,7 +34,7 @@ class MbrUnactivedAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_user__identity='0')
+        qs = qs.filter(mbse_user__identity='1000')
         return qs
 
 @xadmin.sites.register(IncUnactived.IncUnactived)
@@ -57,7 +57,7 @@ class IncUnactivedAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_user__identity='0')
+        qs = qs.filter(mbse_user__identity='1000')
         return qs
 
 @xadmin.sites.register(CommonFormal.CommonFormal)
@@ -89,7 +89,7 @@ class CommonFormalAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_user__identity='1', mbse_status='6')
+        qs = qs.filter(mbse_user__identity='1001', mbse_status='2006')
         return qs
 
 
@@ -124,7 +124,7 @@ class CommonAuditAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_user__identity='1').exclude(mbse_status='6')
+        qs = qs.filter(mbse_user__identity='1001').exclude(mbse_status='2006')
         return qs
 
 
@@ -159,7 +159,7 @@ class SeniorFormalAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_user__identity='2', mbse_status='6')
+        qs = qs.filter(mbse_user__identity='1002', mbse_status='2006')
         return qs
 
 
@@ -193,7 +193,7 @@ class SeniorAuditAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_user__identity='2').exclude(mbse_status='6')
+        qs = qs.filter(mbse_user__identity='1002').exclude(mbse_status='2006')
         return qs
 
 
@@ -217,7 +217,7 @@ class IncFormalAdmin(object):
     model_icon = "fa fa-group"
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_user__identity='3', mbse_status='6')
+        qs = qs.filter(mbse_user__identity='1003', mbse_status='2006')
         return qs
     def get_form_layout(self):
         self.form_layout = IncLayout
@@ -246,7 +246,7 @@ class IncAuditAdmin(object):
 
     def queryset(self):
         qs = super().queryset()
-        qs = qs.filter(mbse_user__identity='3').exclude(mbse_status='6')
+        qs = qs.filter(mbse_user__identity='1003').exclude(mbse_status='2006')
         return qs
 
     def get_form_layout(self):

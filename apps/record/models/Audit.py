@@ -29,13 +29,13 @@ class Audit(models.Model):
                                      verbose_name="关联会员信息",
                                      on_delete=models.CASCADE)
     audit_status = models.CharField(verbose_name="申请结果",
-                                    choices=(('0', '申请未处理'), ('1', '申请通过'), ('2', '申请拒绝')),
+                                    choices=(('4000', '申请未处理'), ('4001', '申请通过'), ('4002', '申请拒绝')),
                                     max_length=128,
-                                    default='0',
+                                    default='4000',
                                     )
 
     def save(self, *args, **kwargs):
         self.audit_member = MbrCommon.objects.get(mbse_user=self.audit_user)
         if self.relate_activity.act_need_audit is False:
-            self.audit_status = '1'
+            self.audit_status = '4001'
         super(Audit, self).save(*args, **kwargs)

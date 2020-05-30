@@ -115,7 +115,7 @@ class MbrCommon(MbrBase):
         from financial.models import Order
         from certification.models import MbrCert
         super(MbrCommon, self).save(*args, **kwargs)
-        if self.mbse_status == '3' and self.mbse_user.identity == '1':
+        if self.mbse_status == '2003' and self.mbse_user.identity == '1001':
             Order.objects.update_or_create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="60")
-        elif self.mbse_status == '3' and self.mbse_user.identity == '2':
+        elif self.mbse_status == '2003' and self.mbse_user.identity == '1002':
             Order.objects.update_or_create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="100")
