@@ -5,10 +5,10 @@ class OrderSerializers(serializers.ModelSerializer):
     class Meta:
         model = Order
         exclude =["relate_member"]
-        read_only_fields=["name",'oid','price','method','exp','date',]
+        read_only_fields=["name",'oid','price','exp','date',]
 
 class OrderIncSerializers(serializers.ModelSerializer):
     class Meta:
         model = OrderInc
         exclude =["relate_member"]
-        read_only_fields=["name",'oid','price','method','exp','date',]
+        read_only_fields=["name",'oid','price','exp','date',]
