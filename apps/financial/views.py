@@ -35,7 +35,7 @@ class OrderViewSet(viewsets.GenericViewSet, OrderListMixin):
 
             s = Order.objects.get(id=pk)
             print(request.data['status'])
-            if request.data['status'] == "2" or request.data['status'] == "3":
+            if request.data['status'] == "3002" or request.data['status'] == "3003":
                 return FormatResponse(code=400, msg="错误", data="权限不足",
                                       status=status.HTTP_400_BAD_REQUEST)
 
@@ -53,7 +53,7 @@ class OrderViewSet(viewsets.GenericViewSet, OrderListMixin):
     def MbrJudgePass(self, request, pk):
         try:
             s = Order.objects.get(id=pk)
-            s.status = '3'
+            s.status = '3003'
             s.save()
             return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
         except Exception as e:
@@ -63,7 +63,7 @@ class OrderViewSet(viewsets.GenericViewSet, OrderListMixin):
     def MbrJudgeDeny(self, request, pk):
         try:
             s = Order.objects.get(id=pk)
-            s.status = '2'
+            s.status = '3002'
             s.save()
             return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
         except Exception as e:
@@ -84,7 +84,7 @@ class OrderIncViewSet(viewsets.GenericViewSet, OrderListMixin):
         """
         try:
             s = OrderInc.objects.get(id=pk)
-            if request.data['status'] == "2" or request.data['status'] == "3":
+            if request.data['status'] == "3002" or request.data['status'] == "3003":
                 return FormatResponse(code=400, msg="错误", data="权限不足",
                                       status=status.HTTP_400_BAD_REQUEST)
             ser = OrderIncSerializers(instance=s, data=request.data, context={'request': request})
@@ -101,7 +101,7 @@ class OrderIncViewSet(viewsets.GenericViewSet, OrderListMixin):
     def IncJudgePass(self, request, pk):
         try:
             s = OrderInc.objects.get(id=pk)
-            s.status = '3'
+            s.status = '3003'
             s.save()
             return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
         except Exception as e:
@@ -111,7 +111,7 @@ class OrderIncViewSet(viewsets.GenericViewSet, OrderListMixin):
     def IncJudgeDeny(self, request, pk):
         try:
             s = OrderInc.objects.get(id=pk)
-            s.status = '2'
+            s.status = '3002'
             s.save()
             return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
         except Exception as e:

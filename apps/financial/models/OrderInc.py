@@ -56,16 +56,16 @@ class OrderInc(models.Model):
                             )
     status = models.CharField(verbose_name='订单状态',
                               max_length=128,
-                              choices=(('0', '未缴费'), ('1', '用户缴费，等待审核'), ('2', '审核不通过'), ('3', '审核通过')),
-                              default=0
+                              choices=(('3000', '未缴费'), ('3001', '用户缴费，等待审核'), ('3002', '审核不通过'), ('3003', '审核通过')),
+                              default='3000'
                               )
 
     def save(self, *args, **kwargs):
         super(OrderInc, self).save(*args, **kwargs)
         m = self.relate_member
-        if self.status == '3':
-            m.mbse_status = 6
+        if self.status == '3003':
+            m.mbse_status = '2006'
             m.save(update_fields=["mbse_status"])
-        elif self.status == '2':
-            m.mbse_status = 5
+        elif self.status == '3002':
+            m.mbse_status = '2005'
             m.save(update_fields=["mbse_status"])
