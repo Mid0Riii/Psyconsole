@@ -5,7 +5,7 @@
             id = url.split("/")[4];
             updateobj = $.ajax(
                 {
-                    url: "/api/financial/" + id + "/MbrJudgePass",
+                    url: "/api/financial/mbr/" + id + "/MbrJudgePass",
                     type: 'GET',
                     success: function (res) {
                         console.log(res);
@@ -24,7 +24,7 @@
             id = url.split("/")[4];
             updateobj = $.ajax(
                 {
-                    url: "/api/financial/" + id + "/MbrJudgeDeny",
+                    url: "/api/financial/mbr/" + id + "/MbrJudgeDeny",
                     type: 'GET',
                     success: function (res) {
                         console.log(res);
