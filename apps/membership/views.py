@@ -172,7 +172,7 @@ class IncViewSet(viewsets.GenericViewSet, MbrListMixin):
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
 
-
+#TODO CODEVIEW 比较好的图片上传逻辑：前端在用户选择图片后立刻上传，同时后端回传图片上传后的url
 
 class AvatarViewSet(viewsets.GenericViewSet):
     serializer_class = MbrAvatarSerializers
