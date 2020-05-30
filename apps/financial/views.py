@@ -32,11 +32,13 @@ class OrderViewSet(viewsets.GenericViewSet, OrderListMixin):
         更新订单
         """
         try:
+
             s = Order.objects.get(id=pk)
-            ser = OrderSerializers(instance=s, data=request.data, context={'request': request})
-            if ser.status != "0" or ser.status != "1":
+            if request.data.status != "0" or request.data.status != "1":
                 return FormatResponse(code=400, msg="错误", data="权限不足",
                                       status=status.HTTP_400_BAD_REQUEST)
+
+            ser = OrderSerializers(instance=s, data=request.data, context={'request': request})
             if ser.is_valid():
                 ser.save()
                 return FormatResponse(code=201, msg="修改成功", data=ser.data, status=status.HTTP_201_CREATED)
