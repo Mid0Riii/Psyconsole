@@ -120,7 +120,7 @@ class IsFormalMember(BasePermission):
         u = request.user
         try:
             m = MbrCommon.objects.get(mbse_user=u)
-            if m.mbse_status=='6':
+            if m.mbse_status=='2006':
                 return True
             else:
                 return False
