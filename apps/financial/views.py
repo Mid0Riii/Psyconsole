@@ -34,7 +34,8 @@ class OrderViewSet(viewsets.GenericViewSet, OrderListMixin):
         try:
 
             s = Order.objects.get(id=pk)
-            if request.data['status'] != "0" or request.data['status'] != "1":
+            print(request.data['status'])
+            if request.data['status'] == "2" or request.data['status'] == "3":
                 return FormatResponse(code=400, msg="错误", data="权限不足",
                                       status=status.HTTP_400_BAD_REQUEST)
 
@@ -83,7 +84,7 @@ class OrderIncViewSet(viewsets.GenericViewSet, OrderListMixin):
         """
         try:
             s = OrderInc.objects.get(id=pk)
-            if request.data['status'] != "0" or request.data['status'] != "1":
+            if request.data['status'] == "2" or request.data['status'] == "3":
                 return FormatResponse(code=400, msg="错误", data="权限不足",
                                       status=status.HTTP_400_BAD_REQUEST)
             ser = OrderIncSerializers(instance=s, data=request.data, context={'request': request})
