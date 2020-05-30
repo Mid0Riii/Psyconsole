@@ -45,7 +45,7 @@ class Activity(models.Model):
         super(Activity, self).save(*args, **kwargs)
         if self.act_is_available==True:
             if self.act_need_audit:
-                queryset = Audit.objects.filter(relate_activity=self,audit_status='1')
+                queryset = Audit.objects.filter(relate_activity=self,audit_status='4001')
                 for q in queryset:
                     Diary.objects.create(related_act = self,related_user = q.audit_user,diary_title=self.act_title,diary_date = self.act_date,
                                          diary_loc = self.act_loc,diary_method = self.act_method)
