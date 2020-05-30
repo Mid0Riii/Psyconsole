@@ -71,7 +71,7 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
         phone = data['phone']
         id = data['id']
         try:
-            s = MbrCommon.objects.get(mbse_name=name, mbse_user__phone=phone, mbr_id_num=id)
+            s = MbrCommon.objects.get(mbse_name=name, mbr_phone=phone, mbr_id_num=id)
             if s.mbse_status == '6' and s.mbse_user.identity != '0':
                 return FormatResponse(code=200, msg="您是本协会的会员", data="", status=status.HTTP_200_OK)
             else:
