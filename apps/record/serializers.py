@@ -28,6 +28,6 @@ class ActivitySerializers(serializers.ModelSerializer):
             m = Audit.objects.get(relate_activity=obj,audit_user=user)
             return m.get_audit_status_display()
         except Exception as e:
-            return str(e)
+            return "您未申请该活动"
 
 

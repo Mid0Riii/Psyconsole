@@ -22,6 +22,8 @@ class ActivityViewSet(viewsets.GenericViewSet, MyListMixin):
     queryset = Activity.objects.all()
     permission_classes = [IsAuthenticated,IsFormalMember]
 
+
+
 class AuditViewSet(viewsets.GenericViewSet, MyListMixin):
     serializer_class = AuditSerializers
     permission_classes = [IsAuthenticated, IsFormalMember]
@@ -47,7 +49,7 @@ class AuditViewSet(viewsets.GenericViewSet, MyListMixin):
     @action(methods=['delete'], detail=True)
     def delete(self, request, pk):
         """
-        删除申请
+        删除申请，此处的id为关联活动id
         """
         try:
             s = Audit.objects.get(relate_activity__id=pk,audit_user = request.user)
