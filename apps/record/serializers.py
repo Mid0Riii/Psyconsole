@@ -18,7 +18,7 @@ class DiarySerializers(serializers.ModelSerializer):
 class ActivitySerializers(serializers.ModelSerializer):
     class Meta:
         model = Activity
-        fields = ['act_is_available','act_need_audit','act_title','act_date',
+        fields = ['id','act_is_available','act_need_audit','act_title','act_date',
                   'act_loc','act_method','act_description','audit_status']
     audit_status = serializers.SerializerMethodField()
 
