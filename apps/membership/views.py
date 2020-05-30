@@ -83,7 +83,7 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
     def MbrJudgePass(self, request, pk):
         try:
             s = MbrCommon.objects.get(id=pk)
-            s.mbse_status = '3'
+            s.mbse_status = '2003'
             s.save()
             return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
         except Exception as e:
@@ -93,7 +93,7 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
     def MbrJudgeDeny(self, request, pk):
         try:
             s = MbrCommon.objects.get(id=pk)
-            s.mbse_status = '2'
+            s.mbse_status = '2002'
             s.save()
             return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
         except Exception as e:
@@ -156,7 +156,7 @@ class IncViewSet(viewsets.GenericViewSet, MbrListMixin):
     def IncJudgePass(self, request, pk):
         try:
             s = MbrInc.objects.get(id=pk)
-            s.mbse_status = '3'
+            s.mbse_status = '2003'
             s.save()
             return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
         except Exception as e:
@@ -166,7 +166,7 @@ class IncViewSet(viewsets.GenericViewSet, MbrListMixin):
     def IncJudgeDeny(self, request, pk):
         try:
             s = MbrInc.objects.get(id=pk)
-            s.mbse_status = '2'
+            s.mbse_status = '2002'
             s.save()
             return FormatResponse(code=200, msg="成功", data="", status=status.HTTP_200_OK)
         except Exception as e:

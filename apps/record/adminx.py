@@ -16,7 +16,7 @@ class AuditJudgeAction(BaseActionView):
     def do_action(self, queryset):
         # queryset 是包含了已经选择的数据的 queryset
         for obj in queryset:
-            obj.audit_status = '1'
+            obj.audit_status = '4001'
             obj.save()
         # 返回 HttpResponse
         return HttpResponseRedirect("/xadmin/record/audit/")
