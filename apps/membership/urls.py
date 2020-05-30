@@ -5,6 +5,7 @@ from . import views
 
 routers = routers.DefaultRouter()
 routers.register(r'mbr',views.MemberViewSet,basename='mbr')
+routers.register(r'find',views.MemberFindViewSet,basename='find')
 routers.register(r'inc',views.IncViewSet,basename='inc')
 routers.register(r'img',views.AvatarViewSet,basename='img')
 

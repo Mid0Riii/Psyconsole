@@ -18,6 +18,27 @@ class MbrListMixin(ListModelMixin):
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
 
+class MemberFindViewSet(viewsets.GenericViewSet):
+    serializer_class = MbrCommonSerializers
+
+    @action(methods=['post'], detail=False, )
+    def is_user(self, request):
+        """
+        查询是否为本单位会员
+        """
+        data = request.data
+        name = data['name']
+        phone = data['phone']
+        id = data['id']
+        try:
+            s = MbrCommon.objects.get(mbse_name=name, mbr_phone=phone, mbr_id_num=id)
+            if s.mbse_status == '2006' and s.mbse_user.identity != '1000':
+                return FormatResponse(code=200, msg="您是本协会的会员", data="", status=status.HTTP_200_OK)
+            else:
+                return FormatResponse(code=400, msg="未查询到符合条件的信息或申请正在审核中", data="", status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return FormatResponse(code=400, msg="未查询到符合条件的信息或申请正在审核中", data=str(e), status=status.HTTP_400_BAD_REQUEST)
+
 
 class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
     serializer_class = MbrCommonSerializers
@@ -60,24 +81,6 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
                                       status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
-
-    @action(methods=['post'], detail=False, )
-    def is_user(self, request):
-        """
-        查询是否为本单位会员
-        """
-        data = request.data
-        name = data['name']
-        phone = data['phone']
-        id = data['id']
-        try:
-            s = MbrCommon.objects.get(mbse_name=name, mbr_phone=phone, mbr_id_num=id)
-            if s.mbse_status == '2006' and s.mbse_user.identity != '1000':
-                return FormatResponse(code=200, msg="您是本协会的会员", data="", status=status.HTTP_200_OK)
-            else:
-                return FormatResponse(code=400, msg="未查询到符合条件的信息或申请正在审核中", data="", status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return FormatResponse(code=400, msg="未查询到符合条件的信息或申请正在审核中", data=str(e), status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['get'], detail=True)
     def MbrJudgePass(self, request, pk):
