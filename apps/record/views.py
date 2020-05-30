@@ -50,7 +50,7 @@ class AuditViewSet(viewsets.GenericViewSet, MyListMixin):
         删除申请
         """
         try:
-            s = Audit.objects.get(id=pk)
+            s = Audit.objects.get(relate_activity__id=pk,audit_user = request.user)
             s.delete()
             return FormatResponse(code=200, msg="删除成功", data="", status=status.HTTP_200_OK)
         except Exception as e:
