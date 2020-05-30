@@ -80,5 +80,5 @@ class MbrInc(MbrBase):
     def save(self, *args, **kwargs):
         from financial.models import OrderInc
         super(MbrInc, self).save(*args, **kwargs)
-        if self.mbse_status == '3' and self.mbse_user.identity == '3':
+        if self.mbse_status == '2003' and self.mbse_user.identity == '1003':
             OrderInc.objects.update_or_create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name)
