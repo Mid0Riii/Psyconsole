@@ -26,7 +26,7 @@ class ActivitySerializers(serializers.ModelSerializer):
         user = self.context['request'].user
         try:
             m = Audit.objects.get(relate_activity=obj,audit_user=user)
-            return m.get_audit_status_display()
+            return m.audit_status
         except Exception as e:
             return "您未申请该活动"
 
