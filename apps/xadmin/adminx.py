@@ -43,7 +43,7 @@ class GlobalSetting(object):
     # 菜单样式改为折叠
     menu_style = 'accordion'
     # 页头
-    site_title = '南大心理咨询师培训中心报名后台'
+    site_title = '江西心理咨询师培训中心报名后台'
     # 页脚
     site_footer = 'Aldrich from NCUTEA'
     def get_site_menu(self):

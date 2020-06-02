@@ -31,7 +31,7 @@ class Audit(models.Model):
     audit_status = models.CharField(verbose_name="申请结果",
                                     choices=(('4000', '申请未处理'), ('4001', '申请通过'), ('4002', '申请拒绝')),
                                     max_length=128,
-                                    default='4000',
+                                    default='4002',
                                     )
 
     def save(self, *args, **kwargs):
