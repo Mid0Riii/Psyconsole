@@ -36,7 +36,7 @@ def generateCert(type, code, name, gender, unit, grade, title, avai_year, avai_m
         avatar = avatar.resize((400, 560))
         image.paste(avatar, (585, 1525))
     else:
-        avatar = Image.open("assets/defaultavatar.jpg").convert("CMYK")
+        avatar = Image.open("./assets/defaultavatar.jpg").convert("CMYK")
         avatar = avatar.resize((400, 560))
         image.paste(avatar, (585, 1525))
     output_buffer = BytesIO()
@@ -44,3 +44,4 @@ def generateCert(type, code, name, gender, unit, grade, title, avai_year, avai_m
     byte_data = output_buffer.getvalue()
     base64_str = base64.b64encode(byte_data)
     return base64_str
+generateCert("37373737373737", "普通会员", "张三", "男", "南昌大学", "二级", "讲师", "2020","11","20","" )
