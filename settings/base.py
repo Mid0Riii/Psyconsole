@@ -10,13 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 import datetime
-import os,sys
+import os, sys
 from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(__file__).parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -47,7 +46,6 @@ INSTALLED_APPS = [
     'record',
     'certification',
 
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,9 +56,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
 
-    #跨域中间件
+    # 跨域中间件
     'corsheaders.middleware.CorsMiddleware',
-
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -91,7 +88,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -101,7 +97,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -121,7 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -135,18 +129,15 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static/static').replace('\\', '/')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'collected_static/media').replace('\\', '/')     #设置静态文件路径为media文件夹
+MEDIA_ROOT = os.path.join(BASE_DIR, 'collected_static/media').replace('\\', '/')  # 设置静态文件路径为media文件夹
 MEDIA_URL = '/media/'
 
-
-AUTH_USER_MODEL="myauth.CustomUser"
-
+AUTH_USER_MODEL = "myauth.CustomUser"
 
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':
@@ -199,14 +190,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
-    'EXCEPTION_HANDLER':'utils.drf.exception_handler'
+    'EXCEPTION_HANDLER': 'utils.drf.exception_handler'
 }
 
-AUTHENTICATION_BACKENDS =(
+AUTHENTICATION_BACKENDS = (
     'myauth.views.CustomBackend',
 )
-
-
 
 CORS_ORIGIN_WHITELIST = ()
 
@@ -252,7 +241,7 @@ SWAGGER_SETTINGS = {
     'REFETCH_SCHEMA_WITH_AUTH': True,
     'REFETCH_SCHEMA_ON_LOGOUT': True,
 
-    'DEFAULT_INFO': 'DjangoDrfTest.urls.swagger_info',#这里注意，更改DjangoDrfTest
+    'DEFAULT_INFO': 'DjangoDrfTest.urls.swagger_info',  # 这里注意，更改DjangoDrfTest
 
     'SECURITY_DEFINITIONS': {
         'Basic': {

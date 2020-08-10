@@ -173,7 +173,10 @@ class ImportView(ImportBaseView):
                           request.POST or None,
                           request.FILES or None)
 
-        context['title'] = _("Import") + ' ' + self.opts.verbose_name
+        #TODO CODEVIEW 对verbose_name增加类型转换
+
+        # context['title'] = _("Import") + ' ' + self.opts.verbose_name
+        context['title'] = _("Import") + ' ' + str(self.opts.verbose_name)
         context['form'] = form
         context['opts'] = self.model._meta
         context['fields'] = [f.column_name for f in resource.get_user_visible_fields()]
@@ -244,7 +247,7 @@ class ImportView(ImportBaseView):
                     'input_format': form.cleaned_data['input_format'],
                 })
 
-        context['title'] = _("Import") + ' ' + self.opts.verbose_name
+        context['title'] = _("Import") + ' ' + str(self.opts.verbose_name)
         context['form'] = form
         context['opts'] = self.model._meta
         context['fields'] = [f.column_name for f in resource.get_user_visible_fields()]
