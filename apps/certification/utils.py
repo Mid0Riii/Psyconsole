@@ -4,14 +4,15 @@ from django.conf import settings
 import base64
 import re
 from io import BytesIO
-
+import os
 
 def generateCert(type, code, name, gender, unit, grade, title, avai_year, avai_mouth, avai_day, avatar=None):
     curr_time = datetime.datetime.now()
     localdate = curr_time.strftime("%Y-%m-%d").split("-")
-    image = Image.open('assets/cert.jpg')
+    projectpath = os.path.abspath('.')+"/apps/certification/static/"
+    image = Image.open(projectpath+'cert.jpg')
 
-    fontPath = "assets/msyh.ttf"
+    fontPath = projectpath+"msyh.ttf"
     setFont = ImageFont.truetype(fontPath, 70)
     dateFont = ImageFont.truetype(fontPath, 50)
     draw = ImageDraw.Draw(image)
@@ -29,14 +30,14 @@ def generateCert(type, code, name, gender, unit, grade, title, avai_year, avai_m
     draw.text((1870, 2805), localdate[1], fill="black", font=dateFont)
     draw.text((2010, 2805), localdate[2], fill="black", font=dateFont)
     if avatar:
-        base64_data = re.sub('^data:image/.+;base64,', '', avatar)
-        byte_data = base64.b64decode(base64_data)
+        # base64_data = re.sub('^data:image/.+;base64,', '', avatar)
+        byte_data = base64.b64decode(avatar)
         image_data = BytesIO(byte_data)
         avatar = Image.open(image_data).convert("CMYK")
         avatar = avatar.resize((400, 560))
         image.paste(avatar, (585, 1525))
     else:
-        avatar = Image.open("./assets/defaultavatar.jpg").convert("CMYK")
+        avatar = Image.open(projectpath+"defaultavatar.jpg").convert("CMYK")
         avatar = avatar.resize((400, 560))
         image.paste(avatar, (585, 1525))
     output_buffer = BytesIO()
@@ -44,4 +45,4 @@ def generateCert(type, code, name, gender, unit, grade, title, avai_year, avai_m
     byte_data = output_buffer.getvalue()
     base64_str = base64.b64encode(byte_data)
     return base64_str
-generateCert("37373737373737", "普通会员", "张三", "男", "南昌大学", "二级", "讲师", "2020","11","20","" )
+# generateCert("37373737373737", "普通会员", "张三", "男", "南昌大学", "二级", "讲师", "2020","11","20","" )

@@ -49,6 +49,7 @@ class GenerateCertfication(APIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         try:
+        # print(data)
             type = data["type"]
             code = data["code"]
             name = data["name"]
@@ -60,7 +61,6 @@ class GenerateCertfication(APIView):
             avai_mouth = data["avai_mouth"]
             avai_day = data["avai_day"]
             avatar = data["avatar"]
-
             base64img = generateCert(type, code, name, gender, unit, grade, title, avai_year, avai_mouth, avai_day,
                                      avatar)
             return FormatResponse(code=200, msg="成功", data={"base64img": base64img}, status=status.HTTP_200_OK)
