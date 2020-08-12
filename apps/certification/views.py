@@ -36,11 +36,12 @@ class GenerateCertfication(APIView):
             m = MbrCommon.objects.get(mbse_user=request.user)
             u = request.user
             # generateQRcode(m.relate_member.mbse_code, request.get_host())
-            year = datetime.datetime.strptime(str(m.mbse_exp), '%Y')
-            mouth = datetime.datetime.strptime(str(m.mbse_exp), '%m')
-            day = datetime.datetime.strptime(str(m.mbse_exp), '%d')
+            year = datetime.datetime.strftime(m.mbse_exp, '%Y')
+            mouth = datetime.datetime.strftime(m.mbse_exp, '%m')
+            day = datetime.datetime.strftime(m.mbse_exp, '%d')
+
             base64img = generateCert(u.identity, m.mbse_code, m.mbse_name, m.mbr_gender, m.mbr_job, m.mbr_cert,
-                                     m.mbr_title, year, mouth, day, m.mbr_avatar)
+                                     m.mbr_title, year, mouth, day, m.mbr_avatar,b64=False)
             return FormatResponse(code=200, msg="成功", data={"base64img": base64img}, status=status.HTTP_200_OK)
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e),
@@ -62,7 +63,7 @@ class GenerateCertfication(APIView):
             avai_day = data["avai_day"]
             avatar = data["avatar"]
             base64img = generateCert(type, code, name, gender, unit, grade, title, avai_year, avai_mouth, avai_day,
-                                     avatar)
+                                     avatar,b64=True)
             return FormatResponse(code=200, msg="成功", data={"base64img": base64img}, status=status.HTTP_200_OK)
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e),
