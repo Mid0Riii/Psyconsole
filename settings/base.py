@@ -13,9 +13,10 @@ import datetime
 import os, sys
 from pathlib import Path
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 重定义项目默认路径和apps文件夹
 BASE_DIR = Path(__file__).parent.parent
+sys.path.insert(0, str(BASE_DIR / 'apps'))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -27,7 +28,7 @@ SECRET_KEY = '9_h@rnx6hf3f!064$6sbcvnvf+xo9iz-%y*k(yoopmxgc*j9@g'
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-sys.path.insert(0, str(BASE_DIR / 'apps'))
+
 
 # Application definition
 
@@ -137,8 +138,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static/static').replace('\\', '/
 MEDIA_ROOT = os.path.join(BASE_DIR, 'collected_static/media').replace('\\', '/')  # 设置静态文件路径为media文件夹
 MEDIA_URL = '/media/'
 
+# 引入自定义用户模型
 AUTH_USER_MODEL = "myauth.CustomUser"
 
+# JWT认证相关配置
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':
         'rest_framework_jwt.utils.jwt_encode_handler',

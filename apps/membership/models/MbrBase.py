@@ -1,7 +1,6 @@
 from django.db import models
 from myauth.models import CustomUser
 
-
 class MbrBase(models.Model):
     class Meta:
         verbose_name = '成员基类'

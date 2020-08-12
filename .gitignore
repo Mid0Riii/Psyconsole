@@ -246,3 +246,5 @@ $RECYCLE.BIN/
 *.lnk
 
 /collected_static/
+
+*.out
