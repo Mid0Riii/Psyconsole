@@ -3,16 +3,36 @@ import datetime
 from django.conf import settings
 import base64
 import re
+import qrcode
 from io import BytesIO
 import os
 
-def generateCert(type, code, name, gender, unit, grade, title, avai_year, avai_mouth, avai_day, avatar=None,b64=False):
+
+def generateQRcode(code, host):
+    url = host + "/api/cert/" + str(code) + "/"
+    qr = qrcode.QRCode(
+        version=5,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=13,
+        border=2,
+    )
+    qr.add_data(url)
+    qr.make(fit=True)
+    img = qr.make_image()
+    # img = qrcode.make(url)
+    # imgurl = settings.MEDIA_ROOT + "/cert/" + code + '.png'
+    return img
+
+
+def generateCert(request, type, code, name, gender, unit, grade, title, avai_year, avai_mouth, avai_day, user,
+                 avatar=None, b64=False):
     curr_time = datetime.datetime.now()
     localdate = curr_time.strftime("%Y-%m-%d").split("-")
-    projectpath = os.path.abspath('.')+"/apps/certification/static/"
-    image = Image.open(projectpath+'cert.jpg')
+    projectpath = os.path.abspath('.') + "/apps/certification/static/"
+    # projectpath = os.path.abspath('.') + "/static/"
+    image = Image.open(projectpath + 'cert.jpg')
 
-    fontPath = projectpath+"msyh.ttf"
+    fontPath = projectpath + "msyh.ttf"
     setFont = ImageFont.truetype(fontPath, 70)
     dateFont = ImageFont.truetype(fontPath, 50)
     draw = ImageDraw.Draw(image)
@@ -41,13 +61,19 @@ def generateCert(type, code, name, gender, unit, grade, title, avai_year, avai_m
         avatar = avatar.resize((400, 560))
         image.paste(avatar, (585, 1525))
     else:
-        avatar = Image.open(projectpath+"defaultavatar.jpg").convert("CMYK")
+        avatar = Image.open(projectpath + "defaultavatar.jpg").convert("CMYK")
         avatar = avatar.resize((400, 560))
         image.paste(avatar, (585, 1525))
+
+    QR = generateQRcode(user, request.get_host())
+    QR.resize((1200,1200))
+    image.paste(QR, (500, 2400))
     output_buffer = BytesIO()
-    image.show()
     image.save(output_buffer, format='JPEG')
     byte_data = output_buffer.getvalue()
     base64_str = base64.b64encode(byte_data)
+    # image.show()
     return base64_str
-# generateCert("37373737373737", "普通会员", "张三", "男", "南昌大学", "二级", "讲师", "2020","11","20","" )
+
+
+# generateCert(None, "jxg20120001", "普通会员", "邓晓华", "男", "南昌大学", "二级", "教授", "2020", "11", "20", "1")
