@@ -181,7 +181,7 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
     'JWT_AUTH_COOKIE': None,
 }
-
+# JWT相关认证
 REST_FRAMEWORK = {
     # drf默认权限
     # 'DEFAULT_PERMISSION_CLASSES': (
@@ -195,7 +195,7 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
     'EXCEPTION_HANDLER': 'utils.drf.exception_handler'
 }
-
+# 封装认证返回接口
 AUTHENTICATION_BACKENDS = (
     'myauth.views.CustomBackend',
 )

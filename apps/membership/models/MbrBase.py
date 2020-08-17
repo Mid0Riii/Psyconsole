@@ -1,11 +1,13 @@
 from django.db import models
 from myauth.models import CustomUser
 
+
 class MbrBase(models.Model):
-    class Meta:
-        verbose_name = '成员基类'
-        verbose_name_plural = verbose_name
-        abstract = True
+    """
+    成员基类，字段前缀mbse
+    该类存储在全部会员类型（普通会员、高级会员、理事单位）通用的字段
+    抽象模型，不建表
+    """
 
     # mbse_type = models.CharField(verbose_name='用户类型',
     #                              max_length=16,
@@ -43,10 +45,14 @@ class MbrBase(models.Model):
                                  blank=True,
                                  default='空'
                                  )
+    class Meta:
+        verbose_name = '成员基类'
+        verbose_name_plural = verbose_name
+        abstract = True # 抽象模型
 
     def mbse_identity(self):
         c = self.mbse_user
         # print(c.get_identity_display())
         return c.get_identity_display()
-    mbse_identity.short_description="用户身份"
 
+    mbse_identity.short_description = "用户身份"

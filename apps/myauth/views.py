@@ -12,11 +12,11 @@ from rest_framework.utils.serializer_helpers import ReturnDict, ReturnList
 from rest_framework.exceptions import APIException
 
 
+
 class CustomBackend(ModelBackend):
     """
     用户自定义用户验证
     """
-
     def authenticate(self, request, username=None, password=None, **kwargs):  # 重写这个函数
         try:
             user = CustomUser.objects.get(username=username)
@@ -24,7 +24,7 @@ class CustomBackend(ModelBackend):
                 return user
         except Exception as e:
             detail = "无此用户"
-            print(isinstance(detail,dict))
+            # print(isinstance(detail,dict))
             # 异常信息UserProfile matching query does not exist
             raise APIException(detail=detail)
         else:

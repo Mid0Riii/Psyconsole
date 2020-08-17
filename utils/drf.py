@@ -5,7 +5,14 @@ from django.core.exceptions import PermissionDenied
 from django.db import connection, models, transaction
 from django.http import Http404
 from rest_framework import exceptions, status
+"""
+与drf相关的工具函数/重写组件
+"""
 
+
+
+
+# 封装统一返回格式
 class FormatResponse(Response):
     """
     An HttpResponse that allows its data to be rendered into
@@ -42,23 +49,26 @@ class FormatResponse(Response):
             for name, value in six.iteritems(headers):
                 self[name] = value
 
-def jwt_response_payload_handler(token,user=None,request=None):
-    return{
-        'code':'200',
-        'message':'登陆成功',
-        'data':{
-            "token":token,
-            "userid":user.id,
-            "username":user.username,
-            "identity":user.identity,
+# 重写登录成功后的返回值
+def jwt_response_payload_handler(token, user=None, request=None):
+    return {
+        'code': '200',
+        'message': '登陆成功',
+        'data': {
+            "token": token,
+            "userid": user.id,
+            "username": user.username,
+            "identity": user.identity,
         }
     }
+
+
 def set_rollback():
     atomic_requests = connection.settings_dict.get('ATOMIC_REQUESTS', False)
     if atomic_requests and connection.in_atomic_block:
         transaction.set_rollback(True)
 
-
+# 重写登录失败后的返回值
 def exception_handler(exc, context):
     """
     Returns the response that should be used for any given exception.
@@ -92,8 +102,9 @@ def exception_handler(exc, context):
     return None
 
 
-from rest_framework.permissions import BasePermission,SAFE_METHODS
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
+# 判断用户权限
 class IsOwnerOrReadOnly(BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
@@ -105,22 +116,25 @@ class IsOwnerOrReadOnly(BasePermission):
         # so we'll always allow GET, HEAD or OPTIONS requests.
         if request.method in SAFE_METHODS:
             return True
-        print(request.user)
+        # print(request.user)
         # Instance must have an attribute named `owner`.
         return obj.user == request.user
 
+
 from rest_framework.permissions import BasePermission
 from membership.models import MbrCommon
+
 
 class IsFormalMember(BasePermission):
     """
     判断用户是否为正式会员
     """
+
     def has_permission(self, request, view):
         u = request.user
         try:
             m = MbrCommon.objects.get(mbse_user=u)
-            if m.mbse_status=='2006':
+            if m.mbse_status == '2006':
                 return True
             else:
                 return False

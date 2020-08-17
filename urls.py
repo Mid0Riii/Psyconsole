@@ -26,7 +26,10 @@ urlpatterns = [
     path('api/financial/',include("financial.urls")),
     path('api/record/',include("record.urls")),
     path('api/user/',include("myauth.urls")),
+
+    # 取得JWT token
     path('signin/',obtain_jwt_token),
+
     path('api/cert/',include("certification.urls")),
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

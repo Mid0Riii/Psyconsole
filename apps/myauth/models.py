@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
-
+# 重写UserManager解决密码明文的问题
 class MyUserManager(BaseUserManager):
     def create_user(self, username, password=None, ):
         if not username:

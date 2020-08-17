@@ -1,4 +1,4 @@
-from .serializers import MbrCommonSerializers, MbrIncSerializers,MbrAvatarSerializers
+from .serializers import MbrCommonSerializers, MbrIncSerializers, MbrAvatarSerializers
 from .models import MbrCommon, MbrInc
 from rest_framework import status
 from rest_framework import viewsets, filters
@@ -17,6 +17,7 @@ class MbrListMixin(ListModelMixin):
             return FormatResponse(code=200, msg="获取成功", data=response.data, status=status.HTTP_200_OK)
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
+
 
 class MemberFindViewSet(viewsets.GenericViewSet):
     serializer_class = MbrCommonSerializers
@@ -175,17 +176,19 @@ class IncViewSet(viewsets.GenericViewSet, MbrListMixin):
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e), status=status.HTTP_400_BAD_REQUEST)
 
-#TODO CODEVIEW 比较好的图片上传逻辑：前端在用户选择图片后立刻上传，同时后端回传图片上传后的url
+
+# TODO CODEVIEW 比较好的图片上传逻辑：前端在用户选择图片后立刻上传，同时后端回传图片上传后的url
 
 class AvatarViewSet(viewsets.GenericViewSet):
     serializer_class = MbrAvatarSerializers
     queryset = MbrCommon.objects.all()
     permission_classes = [IsAuthenticated]
-    @action(methods=['post'],detail=True)
-    def uploadImg(self,request,pk):
+
+    @action(methods=['post'], detail=True)
+    def uploadImg(self, request, pk):
         try:
             s = MbrCommon.objects.get(id=pk)
-            ser = MbrAvatarSerializers(instance=s,data=request.data)
+            ser = MbrAvatarSerializers(instance=s, data=request.data)
             if ser.is_valid():
                 ser.save()
                 return FormatResponse(code=200, msg="成功", data=ser.data, status=status.HTTP_200_OK)

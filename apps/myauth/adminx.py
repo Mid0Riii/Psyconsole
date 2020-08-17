@@ -11,9 +11,11 @@ from import_export.widgets import ForeignKeyWidget
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from import_export.results import RowResult
 from django.contrib.auth.hashers import make_password
+
 User = get_user_model()
 
 
+# 自定义用户表单
 class MyUserCreationForm(UserCreationForm):
     class Meta:
         model = User
@@ -21,21 +23,21 @@ class MyUserCreationForm(UserCreationForm):
         field_classes = {"username": UsernameField, }
 
 
-
 class UserResources(resources.ModelResource):
-    #TODO CODEVIEW import_export工作流
+    # TODO CODEVIEW import_export工作流
     def before_import_row(self, row, **kwargs):
         """
         对excel里的明文密码进行加密
         """
         row['password'] = make_password(row['password'])
         print(row)
+
     class Meta:
-        model=User
-        skip_unchanged=True
-        report_skipped=True
+        model = User
+        skip_unchanged = True
+        report_skipped = True
         import_id_fields = ('username',)
-        fields=("id","username","identity","password","first_name",'phone')
+        fields = ("id", "username", "identity", "password", "first_name", 'phone')
 
 
 # class CustomUserAdmin(object):
@@ -58,6 +60,7 @@ class UserAdmin(object):
     model_icon = 'fa fa-user'
     relfield_style = 'fk-ajax'
 
+    # 获得重写后的表单
     def get_model_form(self, **kwargs):
         if self.org_obj is None:
             self.form = MyUserCreationForm
@@ -65,6 +68,7 @@ class UserAdmin(object):
             self.form = UserChangeForm
         return super(UserAdmin, self).get_model_form(**kwargs)
 
+    # 重新布局
     def get_form_layout(self):
         if self.org_obj:
             self.form_layout = (
@@ -89,5 +93,6 @@ class UserAdmin(object):
         return super(UserAdmin, self).get_form_layout()
 
 
+# xadmin情况下，用户必须先取消注册再重新注册到自定义的admin
 xadmin.site.unregister(CustomUser)
 xadmin.site.register(CustomUser, UserAdmin)

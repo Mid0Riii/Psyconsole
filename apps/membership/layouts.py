@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext as _
 from xadmin.layout import Fieldset, Main, Side, Row
-
+# 存储各种布局
 MbrLayout = \
     (
         Main(

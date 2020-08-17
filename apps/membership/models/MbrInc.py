@@ -1,13 +1,9 @@
 from .MbrBase import MbrBase
 from django.db import models
 class MbrInc(MbrBase):
-    class Meta:
-        verbose_name = '理事单位会员'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.mbse_name
-
+    """
+    理事单位基类
+    """
     inc_loc = models.CharField(verbose_name='所在地区及办公地址',
                                 max_length=128,
                                 null=True,
@@ -77,6 +73,14 @@ class MbrInc(MbrBase):
                                      blank=True
                                      )
 
+    class Meta:
+        verbose_name = '理事单位会员'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.mbse_name
+
+    # 逻辑相同，参考MbrCommon的save方法
     def save(self, *args, **kwargs):
         from financial.models import OrderInc
         super(MbrInc, self).save(*args, **kwargs)

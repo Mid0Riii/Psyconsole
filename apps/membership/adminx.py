@@ -12,16 +12,14 @@ from import_export.widgets import ForeignKeyWidget
 from myauth.models import CustomUser
 
 
-# @xadmin.sites.register(MbrCommon)
-# class MbrCommonAdmin(object):
-#     pass
+# 导入资源类
 class MemberResources(resources.ModelResource):
     class UserForeignWidget(ForeignKeyWidget):
         def get_queryset(self, value, row, *args, **kwargs):
             return CustomUser.objects.filter(
                 username__iexact=row["mbse_user"]
             )
-
+    # 处理外键
     mbse_user = fields.Field(
         attribute='mbse_user',
         column_name='mbse_user',
@@ -35,6 +33,7 @@ class MemberResources(resources.ModelResource):
         skip_unchanged = True
         # 在导入预览页面中显示跳过的记录
         report_skipped = True
+        # 导入的字段
         fields = (
             'id',
             "mbse_user", "mbse_status", "mbse_judge", "mbse_code", "mbse_exp", "mbse_name", "mbr_gender", "mbr_birth",
@@ -49,12 +48,10 @@ class MbrUnactivedAdmin(object):
     """
     未激活个人用户
     """
-
     list_display = [
         'mbse_user', 'mbse_identity', 'mbse_status',
     ]
     list_filter = ['mbse_user', 'mbse_user__identity', 'mbse_status']
-    # list_editable = list_display
     model_icon = "fa fa-user-o"
     show_bookmarks = False
     MbrJudgeButtonAllow = True

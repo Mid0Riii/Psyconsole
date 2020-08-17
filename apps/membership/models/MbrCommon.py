@@ -4,15 +4,11 @@ from django.utils.html import format_html
 
 
 class MbrCommon(MbrBase):
-    class Meta:
-        verbose_name = '成员'
-        verbose_name_plural = verbose_name
-        abstract = False
-
-    def __str__(self):
-        return self.mbse_name
-
-    mbr_avatar = models.ImageField(upload_to='avatars/',null=True,blank=True,verbose_name="照片")
+    """
+    人类成员基础类，继承自MbrBase
+    实体模型，建立表结构。实质上存储全部普通、高级成员的信息
+    """
+    mbr_avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, verbose_name="照片")
 
     mbr_gender = models.CharField(verbose_name='性别',
                                   max_length=128,
@@ -115,11 +111,26 @@ class MbrCommon(MbrBase):
                                )
     objects = models.Manager()
 
+    class Meta:
+        verbose_name = '成员'
+        verbose_name_plural = verbose_name
+        abstract = False
+
+    def __str__(self):
+        return self.mbse_name
+
     def save(self, *args, **kwargs):
+        # 调整import位置防止递归导包
         from financial.models import Order
-        from certification.models import MbrCert
+        # 调用原方法
         super(MbrCommon, self).save(*args, **kwargs)
+
+        # 若 当前用户状态为 2003（等待缴费） 且 用户身份为 1001（普通会员）
         if self.mbse_status == '2003' and self.mbse_user.identity == '1001':
-            Order.objects.update_or_create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="60")
+            # 生成一张60元的账单
+            Order.objects.update_or_create(relate_user=self.mbse_user, relate_member=self, name=self.mbse_name,
+                                           price="60")
+        # 高级会员100元
         elif self.mbse_status == '2003' and self.mbse_user.identity == '1002':
-            Order.objects.update_or_create(relate_user=self.mbse_user,relate_member=self, name=self.mbse_name, price="100")
+            Order.objects.update_or_create(relate_user=self.mbse_user, relate_member=self, name=self.mbse_name,
+                                           price="100")
