@@ -27,8 +27,8 @@ def generateCert(request, type, code, name, unit, grade, profession,level,title,
                  avatar=None, b64=False):
     curr_time = datetime.datetime.now()
     localdate = curr_time.strftime("%Y-%m-%d").split("-")
-    # projectpath = os.path.abspath('.') + "/apps/certification/static/"
-    projectpath = os.path.abspath('.') + "/static/"
+    projectpath = os.path.abspath('.') + "/apps/certification/static/"
+    # projectpath = os.path.abspath('.') + "/static/"
     image = Image.open(projectpath + 'cert.jpg')
 
     fontPath = projectpath + "msyh.ttf"
