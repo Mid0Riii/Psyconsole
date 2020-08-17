@@ -14,8 +14,6 @@ from .utils import generateCert
 # Create your views here.
 
 
-
-
 def MbrQRAuth(request, pk):
     try:
         MbrCert.objects.get(relate_member__mbse_code=pk)
@@ -29,13 +27,12 @@ class GenerateCertfication(APIView):
         try:
             m = MbrCommon.objects.get(mbse_user=request.user)
             u = request.user
-            # generateQRcode(m.relate_member.mbse_code, request.get_host())
             year = datetime.datetime.strftime(m.mbse_exp, '%Y')
             mouth = datetime.datetime.strftime(m.mbse_exp, '%m')
             day = datetime.datetime.strftime(m.mbse_exp, '%d')
 
-            base64img = generateCert(request,u.identity, m.mbse_code, m.mbse_name, m.mbr_gender, m.mbr_job, m.mbr_cert,
-                                     m.mbr_title, year, mouth, day,u, m.mbr_avatar,b64=False)
+            base64img = generateCert(request, u.get_identity_display(), m.mbse_code, m.mbse_name, m.mbr_job, m.mbr_edu,
+                                     m.mbr_graduate, m.mbr_cert, m.mbr_title,year,mouth,day,avatar=m.mbr_avatar)
             return FormatResponse(code=200, msg="成功", data={"base64img": base64img}, status=status.HTTP_200_OK)
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e),
@@ -45,7 +42,7 @@ class GenerateCertfication(APIView):
         data = request.data
         u = request.user
         try:
-        # print(data)
+            # print(data)
             type = data["type"]
             code = data["code"]
             name = data["name"]
@@ -57,8 +54,9 @@ class GenerateCertfication(APIView):
             avai_mouth = data["avai_mouth"]
             avai_day = data["avai_day"]
             avatar = data["avatar"]
-            base64img = generateCert(request,type, code, name, gender, unit, grade, title, avai_year, avai_mouth, avai_day,u,
-                                     avatar,b64=True)
+            base64img = generateCert(request, type, code, name, gender, unit, grade, title, avai_year, avai_mouth,
+                                     avai_day, u,
+                                     avatar, b64=True)
             return FormatResponse(code=200, msg="成功", data={"base64img": base64img}, status=status.HTTP_200_OK)
         except Exception as e:
             return FormatResponse(code=400, msg="错误", data=str(e),

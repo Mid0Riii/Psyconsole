@@ -108,7 +108,11 @@ class MbrCommon(MbrBase):
                                        null=True,
                                        blank=True
                                        )
-
+    mbr_edu = models.CharField(verbose_name="学历",
+                               null=True,
+                               max_length=128,
+                               blank=True
+                               )
     objects = models.Manager()
 
     def save(self, *args, **kwargs):

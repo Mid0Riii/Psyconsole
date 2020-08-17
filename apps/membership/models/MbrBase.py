@@ -46,7 +46,7 @@ class MbrBase(models.Model):
 
     def mbse_identity(self):
         c = self.mbse_user
-        print(c.get_identity_display())
+        # print(c.get_identity_display())
         return c.get_identity_display()
     mbse_identity.short_description="用户身份"
 

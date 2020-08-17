@@ -23,7 +23,7 @@ def generateQRcode(code, host):
     # imgurl = settings.MEDIA_ROOT + "/cert/" + code + '.png'
     return img
 
-def generateCert(request, type, code, name, unit, grade, profession,level,title,avai_year, avai_mouth, avai_day,
+def generateCert(request, type, code, name, unit, edu, profession,level,title,avai_year, avai_mouth, avai_day,
                  avatar=None, b64=False):
     curr_time = datetime.datetime.now()
     localdate = curr_time.strftime("%Y-%m-%d").split("-")
@@ -39,7 +39,7 @@ def generateCert(request, type, code, name, unit, grade, profession,level,title,
     draw.text((720, 360), code, fill="black", font=setFont)
     draw.text((1280, 1490), name, fill="black", font=setFont)
     draw.text((1430, 1620), unit, fill="black", font=setFont)
-    draw.text((1280, 1750), grade, fill="black", font=setFont)
+    draw.text((1280, 1750), edu, fill="black", font=setFont)
     draw.text((1280, 1870), profession, fill="black", font=setFont)
     draw.text((1660, 2000), level, fill="black", font=setFont)
     draw.text((1280, 2120), title, fill="black", font=setFont)
@@ -74,8 +74,8 @@ def generateCert(request, type, code, name, unit, grade, profession,level,title,
     image.save(output_buffer, format='JPEG')
     byte_data = output_buffer.getvalue()
     base64_str = base64.b64encode(byte_data)
-    image.show()
+    # image.show()
     return base64_str
 
 
-generateCert(None,  "普通会员","jxg20120001", "邓晓华", "南昌大学","博士","心理学", "二级", "教授", "2020", "11", "20")
+# generateCert(None,  "普通会员","jxg20120001", "邓晓华", "南昌大学","博士","心理学", "二级", "教授", "2020", "11", "20")

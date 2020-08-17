@@ -40,7 +40,7 @@ class MemberResources(resources.ModelResource):
             "mbse_user", "mbse_status", "mbse_judge", "mbse_code", "mbse_exp", "mbse_name", "mbr_gender", "mbr_birth",
             "mbr_political", "mbr_folk", "mbr_title", "mbr_id_num", "mbr_graduate", "mbr_graduate_time",
             "mbr_training_ins", "mbr_training_date", "mbr_job", "mbr_loc", "mbr_zip", "mbr_email", "mbr_phone",
-            "mbr_cert", "mbr_cert_date", "mbr_cert_code", "mbr_achievement"
+            "mbr_cert", "mbr_cert_date", "mbr_cert_code", "mbr_achievement","mbr_edu"
         )
 
 
