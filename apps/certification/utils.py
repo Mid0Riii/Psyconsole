@@ -23,26 +23,26 @@ def generateQRcode(code, host):
     # imgurl = settings.MEDIA_ROOT + "/cert/" + code + '.png'
     return img
 
-
-def generateCert(request, type, code, name, gender, unit, grade, title, avai_year, avai_mouth, avai_day, user,
+def generateCert(request, type, code, name, unit, grade, profession,level,title,avai_year, avai_mouth, avai_day,
                  avatar=None, b64=False):
     curr_time = datetime.datetime.now()
     localdate = curr_time.strftime("%Y-%m-%d").split("-")
-    projectpath = os.path.abspath('.') + "/apps/certification/static/"
-    # projectpath = os.path.abspath('.') + "/static/"
+    # projectpath = os.path.abspath('.') + "/apps/certification/static/"
+    projectpath = os.path.abspath('.') + "/static/"
     image = Image.open(projectpath + 'cert.jpg')
 
     fontPath = projectpath + "msyh.ttf"
     setFont = ImageFont.truetype(fontPath, 70)
     dateFont = ImageFont.truetype(fontPath, 50)
     draw = ImageDraw.Draw(image)
-    draw.text((710, 260), type, fill="black", font=setFont)
-    draw.text((710, 400), code, fill="black", font=setFont)
-    draw.text((1290, 1500), name, fill="black", font=setFont)
-    draw.text((1290, 1630), gender, fill="black", font=setFont)
-    draw.text((1430, 1760), unit, fill="black", font=setFont)
-    draw.text((1430, 1890), grade, fill="black", font=setFont)
-    draw.text((1290, 2010), title, fill="black", font=setFont)
+    draw.text((720, 227), type, fill="black", font=setFont)
+    draw.text((720, 360), code, fill="black", font=setFont)
+    draw.text((1280, 1490), name, fill="black", font=setFont)
+    draw.text((1430, 1620), unit, fill="black", font=setFont)
+    draw.text((1280, 1750), grade, fill="black", font=setFont)
+    draw.text((1280, 1870), profession, fill="black", font=setFont)
+    draw.text((1660, 2000), level, fill="black", font=setFont)
+    draw.text((1280, 2120), title, fill="black", font=setFont)
     draw.text((1230, 2295), avai_year, fill="black", font=dateFont)
     draw.text((1450, 2295), avai_mouth, fill="black", font=dateFont)
     draw.text((1600, 2295), avai_day, fill="black", font=dateFont)
@@ -58,22 +58,24 @@ def generateCert(request, type, code, name, gender, unit, grade, title, avai_yea
         else:
             print(avatar)
             avatar = Image.open(avatar)
-        avatar = avatar.resize((400, 560))
-        image.paste(avatar, (585, 1525))
+        avatar = avatar.resize((430, 590))
+        image.paste(avatar, (575, 1565))
     else:
         avatar = Image.open(projectpath + "defaultavatar.jpg").convert("CMYK")
-        avatar = avatar.resize((400, 560))
-        image.paste(avatar, (585, 1525))
+        avatar = avatar.resize((430, 590))
+        image.paste(avatar, (575, 1565))
 
-    QR = generateQRcode(user, request.get_host())
+    # QR = generateQRcode(user, request.get_host())
+    QR = generateQRcode("14", "127.0.0.1")
+
     QR.resize((1200,1200))
     image.paste(QR, (500, 2400))
     output_buffer = BytesIO()
     image.save(output_buffer, format='JPEG')
     byte_data = output_buffer.getvalue()
     base64_str = base64.b64encode(byte_data)
-    # image.show()
+    image.show()
     return base64_str
 
 
-# generateCert(None, "jxg20120001", "普通会员", "邓晓华", "男", "南昌大学", "二级", "教授", "2020", "11", "20", "1")
+generateCert(None,  "普通会员","jxg20120001", "邓晓华", "南昌大学","博士","心理学", "二级", "教授", "2020", "11", "20")
