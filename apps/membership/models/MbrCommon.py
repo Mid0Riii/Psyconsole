@@ -40,7 +40,7 @@ class MbrCommon(MbrBase):
                                   null=True,
                                   blank=True
                                   )
-    mbr_graduate = models.CharField(verbose_name='毕业院校及专业',
+    mbr_graduate = models.CharField(verbose_name='专业',
                                     max_length=128,
                                     null=True,
                                     blank=True

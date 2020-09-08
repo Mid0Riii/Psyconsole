@@ -34,9 +34,9 @@ class UserResources(resources.ModelResource):
 
     class Meta:
         model = User
+        import_id_fields = ('username',)
         skip_unchanged = True
         report_skipped = True
-        import_id_fields = ('username',)
         fields = ("id", "username", "identity", "password", "first_name", 'phone')
 
 
