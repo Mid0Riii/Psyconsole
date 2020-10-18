@@ -12,5 +12,4 @@ urlpatterns=[
     # path(r'',views.StrategyApiView.as_view()),
     # url('getMember/',views.MemberViewSet.as_view({'get':'list'})),
     path('',include(routers.urls))
-
 ]

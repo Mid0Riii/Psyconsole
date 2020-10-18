@@ -28,10 +28,10 @@ def generateCert(request, type, code, name, unit, edu, profession, level, title,
     projectpath = os.path.abspath('.') + "/apps/certification/static/"
     # projectpath = os.path.abspath('.') + "/static/"
     if type == "普通会员":
-        image = Image.open(projectpath + 'commenCert.jpg')
+        image = Image.open(projectpath + 'commonCert.jpg')
     elif type == "高级会员":
         image = Image.open(projectpath + 'seniorCert.jpg')
-
+    starttime = datetime.datetime.now()
     fontPath = projectpath + "msyh.ttf"
     setFont = ImageFont.truetype(fontPath, 60)
     dateFont = ImageFont.truetype(fontPath, 55)
@@ -64,16 +64,15 @@ def generateCert(request, type, code, name, unit, edu, profession, level, title,
         avatar = avatar.resize((430, 590))
         image.paste(avatar, (575, 1565))
 
-    # QR = generateQRcode(user, request.get_host())
-    QR = generateQRcode("14", "127.0.0.1")
+    QR = generateQRcode(request.user.id, request.get_host())
+    # QR = generateQRcode("14", "127.0.0.1")
 
     QR.resize((1200, 1200))
     image.paste(QR, (500, 2500))
     output_buffer = BytesIO()
-    image.save(output_buffer, format='png')
+    image.save(output_buffer, format='jpeg')
     byte_data = output_buffer.getvalue()
     base64_str = base64.b64encode(byte_data)
-    image.show()
     # image.save("test.png")
     return base64_str
 

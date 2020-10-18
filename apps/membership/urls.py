@@ -13,6 +13,6 @@ routers.register(r'img',views.AvatarViewSet,basename='img')
 urlpatterns=[
     # path(r'',views.StrategyApiView.as_view()),
     # url('getMember/',views.MemberViewSet.as_view({'get':'list'})),
-    path('',include(routers.urls))
-
+    path('',include(routers.urls)),
+    path('avatar',views.SetAvatar)
 ]

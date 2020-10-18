@@ -7,6 +7,7 @@ from utils.drf import FormatResponse
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from utils.drf import IsFormalMember
+from .models import MbrCommon
 
 class MyListMixin(ListModelMixin):
     def list(self, request, *args, **kwargs):

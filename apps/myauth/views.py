@@ -15,7 +15,7 @@ from rest_framework.exceptions import APIException
 
 class CustomBackend(ModelBackend):
     """
-    用户自定义用户验证
+    自定义用户验证
     """
     def authenticate(self, request, username=None, password=None, **kwargs):  # 重写这个函数
         try:

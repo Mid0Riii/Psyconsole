@@ -7,6 +7,8 @@
 <body>
 {% if data == True %}
 <h1>认证通过</h1>
+<h2>姓名：{{name}}</h2>
+<h2>会员编号:{{code}}</h2>
 {% endif %}
 {% if data == False %}
 <h1>认证失败</h1>

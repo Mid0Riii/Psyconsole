@@ -246,5 +246,7 @@ $RECYCLE.BIN/
 *.lnk
 
 /collected_static/
-
+/apps/certification/static/
 *.out
+
+

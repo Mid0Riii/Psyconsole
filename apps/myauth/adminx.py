@@ -30,7 +30,6 @@ class UserResources(resources.ModelResource):
         对excel里的明文密码进行加密
         """
         row['password'] = make_password(row['password'])
-        print(row)
 
     class Meta:
         model = User

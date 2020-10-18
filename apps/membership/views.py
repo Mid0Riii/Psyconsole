@@ -10,6 +10,20 @@ from django_filters import rest_framework as drf_filter
 import django_filters
 
 
+def SetAvatar(request):
+    import os,sys
+    from django.http.response import HttpResponse
+    for file in os.listdir("/Users/lvtiancheng/Desktop/psyConsole/psyConsole/collected_static/media/avatars"):
+        name = file[:file.find(".")]
+        try:
+            m = MbrCommon.objects.get(mbse_name=name)
+            m.mbr_avatar = "avatars/"+str(file)
+            m.save()
+        except Exception as e:
+            print(name)
+    return HttpResponse("<h1>完成</h1>")
+
+
 class MbrListMixin(ListModelMixin):
     def list(self, request, *args, **kwargs):
         try:
@@ -73,6 +87,9 @@ class MemberViewSet(viewsets.GenericViewSet, MbrListMixin):
         """
         try:
             s = MbrCommon.objects.get(id=pk)
+            if s.mbse_status=='2002':
+                s.mbse_status="2001"
+                s.save()
             ser = MbrCommonSerializers(instance=s, data=request.data, context={'request': request})
             if ser.is_valid():
                 ser.save()
@@ -146,6 +163,9 @@ class IncViewSet(viewsets.GenericViewSet, MbrListMixin):
         """
         try:
             s = MbrInc.objects.get(id=pk)
+            if s.mbse_status=='2002':
+                s.mbse_status="2001"
+                s.save()
             ser = MbrIncSerializers(instance=s, data=request.data, context={'request': request})
             if ser.is_valid():
                 ser.save()
